@@ -15,6 +15,7 @@
 
 ```
 feat(phase-[num]): [short description]
+fix(phase-[num]): [short description]
 ```
 
 ### Examples

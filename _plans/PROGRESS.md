@@ -36,6 +36,7 @@
 - [x] Shell: Career Timeline component with all 4 companies
 - [x] Shell: About, Contact, 4 showcase placeholder pages
 - [x] Shell builds successfully (`next build` ✓)
+- [x] Fix Tailwind CSS v4 cascade issue — wrap custom `*` reset in `@layer base`; remove `autoprefixer` from PostCSS (incompatible with `@tailwindcss/postcss` v4); add `@source` directives for monorepo scanning
 - [ ] Deploy shell skeleton to Vercel
 
 ### Phase 2 — Hitachi Showcase ⏳ Not Started
