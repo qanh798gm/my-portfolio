@@ -1,0 +1,9 @@
+{
+  "extends": "@portfolio/config/typescript/react-lib",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
