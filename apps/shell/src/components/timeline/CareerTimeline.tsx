@@ -1,101 +1,129 @@
-import Link from 'next/link'
-import { careerData } from '@/lib/career-data'
+'use client'
+
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
+import { careerData, type CareerEntry } from '@/lib/career-data'
+import { ShowcasePanel } from './ShowcasePanel'
 
 export function CareerTimeline() {
+  const [activeId, setActiveId] = useState<string>(careerData[0]!.id)
+
+  const activeEntry = careerData.find((e) => e.id === activeId) ?? careerData[0]!
+
   return (
-    <section id="timeline" className="mx-auto max-w-4xl px-6 py-20">
-      <h2 className="mb-4 text-center text-3xl font-bold text-[var(--color-text-primary)]">
-        Career Timeline
-      </h2>
-      <p className="mb-16 text-center text-sm text-[var(--color-text-secondary)]">
-        6 years across fintech, ERP, crypto, and enterprise logistics
-      </p>
+    <section id="timeline" className="px-6 py-20">
+      <div className="mx-auto max-w-5xl">
+        {/* Section header */}
+        <motion.div
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="mb-3 text-3xl font-bold text-[var(--color-text-primary)]">
+            Career Timeline
+          </h2>
+          <p className="text-sm text-[var(--color-text-secondary)]">
+            6 years across fintech, ERP, crypto, and enterprise logistics
+          </p>
+        </motion.div>
 
-      <ol className="relative border-l border-[var(--color-bg-border)]">
-        {careerData.map((entry) => (
-          <li key={entry.id} className="mb-12 ml-8">
-            {/* Timeline dot */}
-            <span
-              className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full ring-4 ring-[var(--color-bg-primary)]"
-              style={{ backgroundColor: entry.accentColor }}
-              aria-hidden="true"
-            >
-              {entry.isCurrentRole && (
-                <span
-                  className="absolute h-3 w-3 animate-ping rounded-full opacity-75"
-                  style={{ backgroundColor: entry.accentColor }}
-                />
-              )}
-            </span>
+        {/* Horizontal timeline switcher */}
+        <motion.div
+          className="relative mb-10"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {/* Connecting line */}
+          <div
+            className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2"
+            style={{ backgroundColor: 'var(--color-bg-border)' }}
+            aria-hidden="true"
+          />
 
-            {/* Card */}
-            <div className="rounded-xl border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] p-6 transition-shadow hover:shadow-lg">
-              {/* Header */}
-              <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-                <div>
-                  <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">
-                    {entry.role}
-                  </h3>
-                  <p className="font-medium" style={{ color: entry.accentColor }}>
-                    {entry.company}
-                  </p>
-                  <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-                    {entry.period.start} — {entry.period.end} · {entry.location}
-                  </p>
-                </div>
+          <ol className="relative flex items-center justify-between gap-2">
+            {careerData.map((entry) => (
+              <TimelineMilestone
+                key={entry.id}
+                entry={entry}
+                isActive={activeId === entry.id}
+                onClick={() => setActiveId(entry.id)}
+              />
+            ))}
+          </ol>
+        </motion.div>
 
-                {entry.isCurrentRole && (
-                  <span
-                    className="rounded-full px-2.5 py-1 text-xs font-medium"
-                    style={{ backgroundColor: `${entry.accentColor}22`, color: entry.accentColor }}
-                  >
-                    Current
-                  </span>
-                )}
-              </div>
-
-              {/* Highlights */}
-              <ul className="mb-4 space-y-1.5">
-                {entry.highlights.slice(0, 3).map((highlight) => (
-                  <li
-                    key={highlight}
-                    className="flex gap-2 text-sm text-[var(--color-text-secondary)]"
-                  >
-                    <span
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: entry.accentColor }}
-                      aria-hidden="true"
-                    />
-                    {highlight}
-                  </li>
-                ))}
-              </ul>
-
-              {/* Tags */}
-              <div className="mb-4 flex flex-wrap gap-1.5">
-                {entry.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-[var(--color-bg-border)] px-2 py-0.5 text-xs text-[var(--color-text-muted)]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* CTA */}
-              <Link
-                href={entry.showcaseRoute}
-                className="inline-flex items-center gap-1.5 text-xs font-medium transition-colors"
-                style={{ color: entry.accentColor }}
-              >
-                View showcase demo
-                <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </li>
-        ))}
-      </ol>
+        {/* Showcase panel — AnimatePresence for smooth swap */}
+        <AnimatePresence mode="wait">
+          <ShowcasePanel key={activeEntry.id} entry={activeEntry} />
+        </AnimatePresence>
+      </div>
     </section>
+  )
+}
+
+// ─── Timeline milestone dot + label ───────────────────────────────────────────
+
+interface MilestoneProps {
+  entry: CareerEntry
+  isActive: boolean
+  onClick: () => void
+}
+
+function TimelineMilestone({ entry, isActive, onClick }: MilestoneProps) {
+  return (
+    <li className="flex flex-1 flex-col items-center">
+      <button
+        onClick={onClick}
+        className="group flex flex-col items-center gap-3 focus:outline-none"
+        aria-pressed={isActive}
+        aria-label={`View ${entry.shortName} showcase`}
+      >
+        {/* Logo / dot */}
+        <div
+          className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 bg-[var(--color-bg-surface)] transition-all duration-300"
+          style={{
+            borderColor: isActive ? entry.accentColor : 'var(--color-bg-border)',
+            boxShadow: isActive ? `0 0 16px ${entry.accentColor}55` : 'none',
+          }}
+        >
+          <Image
+            src={entry.logo}
+            alt={entry.shortName}
+            width={32}
+            height={32}
+            className="h-8 w-8 object-contain"
+          />
+          {/* Active pulse ring */}
+          {isActive && (
+            <motion.span
+              className="absolute inset-0 rounded-full"
+              style={{ border: `2px solid ${entry.accentColor}` }}
+              initial={{ scale: 1, opacity: 0.6 }}
+              animate={{ scale: 1.4, opacity: 0 }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+              aria-hidden="true"
+            />
+          )}
+        </div>
+
+        {/* Company name + period */}
+        <div className="text-center">
+          <p
+            className="text-xs font-semibold transition-colors duration-200"
+            style={{ color: isActive ? entry.accentColor : 'var(--color-text-muted)' }}
+          >
+            {entry.shortName}
+          </p>
+          <p className="mt-0.5 text-[10px] text-[var(--color-text-muted)]">
+            {entry.period.start.split(' ')[1]}
+          </p>
+        </div>
+      </button>
+    </li>
   )
 }

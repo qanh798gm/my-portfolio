@@ -1,22 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/#timeline', label: 'Timeline' },
-  { href: '/contact', label: 'Contact' },
+  { href: '#timeline', label: 'Timeline' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#about', label: 'About' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 export function Navbar() {
-  const pathname = usePathname()
-
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-bg-border)] bg-[var(--color-bg-primary)] backdrop-blur-md [background-color:color-mix(in_srgb,var(--color-bg-primary)_80%,transparent)]">
+    <header className="sticky top-0 z-50 border-b border-[var(--color-bg-border)] backdrop-blur-md [background-color:color-mix(in_srgb,var(--color-bg-primary)_80%,transparent)]">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        {/* Logo / Name */}
+        {/* Brand */}
         <Link
           href="/"
           className="font-mono text-sm font-semibold tracking-wide text-[var(--color-brand-primary)] transition-colors hover:text-[var(--color-brand-accent)]"
@@ -24,21 +21,16 @@ export function Navbar() {
           {'<AnhDo />'}
         </Link>
 
-        {/* Nav links */}
+        {/* Anchor links */}
         <ul className="flex items-center gap-6">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <Link
+              <a
                 href={link.href}
-                className={[
-                  'text-sm transition-colors',
-                  pathname === link.href
-                    ? 'font-medium text-[var(--color-text-primary)]'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
-                ].join(' ')}
+                className="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
               >
                 {link.label}
-              </Link>
+              </a>
             </li>
           ))}
         </ul>

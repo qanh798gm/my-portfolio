@@ -1,9 +1,7 @@
-import Link from 'next/link'
-
 const socialLinks = [
   { label: 'GitHub', href: 'https://github.com/anhdo95' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/anhdo95' },
-  { label: 'Email', href: 'mailto:q.anh798gm@gmail.com' },
+  { label: 'Email', href: 'mailto:doquocanh.work@gmail.com' },
 ]
 
 export function Footer() {
@@ -17,14 +15,14 @@ export function Footer() {
         <ul className="flex items-center gap-6">
           {socialLinks.map((link) => (
             <li key={link.label}>
-              <Link
+              <a
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="text-xs text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-brand-primary)]"
               >
                 {link.label}
-              </Link>
+              </a>
             </li>
           ))}
         </ul>

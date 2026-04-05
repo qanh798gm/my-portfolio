@@ -32,11 +32,17 @@
 - [x] Scaffold `packages/ui` (`@portfolio/ui`) — Button, Badge, Spinner atoms
 - [x] Scaffold `apps/shell` (Next.js 14, App Router, TypeScript)
 - [x] Shell: global layout (Navbar, Footer)
-- [x] Shell: Hero section (name, role, location, key stats)
-- [x] Shell: Career Timeline component with all 4 companies
-- [x] Shell: About, Contact, 4 showcase placeholder pages
+- [x] Shell: Fix Tailwind CSS v4 cascade issue (`@layer base` + remove autoprefixer)
+- [x] Shell: Refactor to single-page layout — Hero, Timeline, Projects, About, Contact
+- [x] Shell: Hero — simplified copy, `<AnhDo />` brand, Framer Motion stagger fade-in
+- [x] Shell: Career Timeline — horizontal switcher with company logos, `AnimatePresence` panel swap
+- [x] Shell: ShowcasePanel — branded company header, tech chips, demo placeholder per company
+- [x] Shell: Personal Projects section — Bliff AI coach card (in-progress)
+- [x] Shell: About section — bio, skills matrix by category, AZ-305 cert badge
+- [x] Shell: Contact section — email, GitHub, LinkedIn with icons
+- [x] Shell: Navbar — anchor links (`#timeline`, `#projects`, `#about`, `#contact`)
+- [x] Shell: Brand colors updated from actual logo SVGs (Aquariux `#0F4394`, Amaris `#d4a99a`, GMO `#D62825`, Hitachi `#E8000D`)
 - [x] Shell builds successfully (`next build` ✓)
-- [x] Fix Tailwind CSS v4 cascade issue — wrap custom `*` reset in `@layer base`; remove `autoprefixer` from PostCSS (incompatible with `@tailwindcss/postcss` v4); add `@source` directives for monorepo scanning
 - [ ] Deploy shell skeleton to Vercel
 
 ### Phase 2 — Hitachi Showcase ⏳ Not Started

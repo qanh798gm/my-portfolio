@@ -1,9 +1,6 @@
-const stats = [
-  { label: 'Years Experience', value: '6+' },
-  { label: 'Enterprise Clients', value: '20+' },
-  { label: 'ERP Modules Shipped', value: '10+' },
-  { label: 'Certifications', value: 'AZ-305' },
-]
+'use client'
+
+import { motion } from 'framer-motion'
 
 const techHighlights = [
   'React / TypeScript',
@@ -16,6 +13,20 @@ const techHighlights = [
   'Azure / AWS',
 ]
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+}
+
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden px-6 pb-20 pt-24">
@@ -26,40 +37,62 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-4xl text-center">
-        {/* Role badge */}
-        <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] px-3 py-1 text-xs text-[var(--color-text-secondary)]">
-          <span
-            className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"
-            aria-hidden="true"
-          />
-          Open to new opportunities
-        </span>
+      <motion.div
+        className="relative mx-auto max-w-4xl text-center"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Availability badge */}
+        <motion.div variants={itemVariants}>
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] px-3 py-1 text-xs text-[var(--color-text-secondary)]">
+            <span
+              className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"
+              aria-hidden="true"
+            />
+            Open to new opportunities
+          </span>
+        </motion.div>
 
-        {/* Name */}
-        <h1 className="mb-4 text-5xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-6xl">
-          Anh Quoc Do
-        </h1>
+        {/* Brand name */}
+        <motion.h1
+          variants={itemVariants}
+          className="mb-4 font-mono text-5xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-6xl"
+        >
+          {'<AnhDo />'}
+        </motion.h1>
 
-        {/* Title */}
-        <p className="mb-3 text-xl font-medium text-[var(--color-brand-primary)]">
+        {/* Role */}
+        <motion.p
+          variants={itemVariants}
+          className="mb-3 text-xl font-medium text-[var(--color-brand-primary)]"
+        >
           Frontend Engineer
-        </p>
+        </motion.p>
 
         {/* Location */}
-        <p className="mb-8 text-sm text-[var(--color-text-muted)]">
-          Ho Chi Minh City, Vietnam · 6 years experience
-        </p>
+        <motion.p
+          variants={itemVariants}
+          className="mb-8 text-sm text-[var(--color-text-muted)]"
+        >
+          Ho Chi Minh City, Vietnam
+        </motion.p>
 
         {/* Tagline */}
-        <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)]">
-          I build trading platforms, ERP ecosystems, and enterprise dashboards that millions of
-          users depend on. Specialising in React, TypeScript, micro-frontend architecture, and
-          real-time data interfaces.
-        </p>
+        <motion.p
+          variants={itemVariants}
+          className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)]"
+        >
+          6 years building trading platforms, ERP ecosystems, and enterprise dashboards across
+          fintech, logistics, and consulting — specialising in React, TypeScript, and
+          micro-frontend architecture.
+        </motion.p>
 
         {/* CTAs */}
-        <div className="mb-16 flex flex-wrap items-center justify-center gap-3">
+        <motion.div
+          variants={itemVariants}
+          className="mb-16 flex flex-wrap items-center justify-center gap-3"
+        >
           <a
             href="#timeline"
             className="rounded-lg bg-[var(--color-brand-primary)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--color-brand-primary-hover)]"
@@ -73,23 +106,13 @@ export function HeroSection() {
           >
             Download CV
           </a>
-        </div>
-
-        {/* Stats */}
-        <div className="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-xl border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] px-4 py-5"
-            >
-              <p className="text-2xl font-bold text-[var(--color-text-primary)]">{stat.value}</p>
-              <p className="mt-1 text-xs text-[var(--color-text-muted)]">{stat.label}</p>
-            </div>
-          ))}
-        </div>
+        </motion.div>
 
         {/* Tech tags */}
-        <div className="flex flex-wrap justify-center gap-2">
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-wrap justify-center gap-2"
+        >
           {techHighlights.map((tech) => (
             <span
               key={tech}
@@ -98,8 +121,8 @@ export function HeroSection() {
               {tech}
             </span>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }
