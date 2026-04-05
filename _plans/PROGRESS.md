@@ -42,7 +42,10 @@
 - [x] Shell: Contact section — email, GitHub, LinkedIn with icons
 - [x] Shell: Navbar — anchor links (`#timeline`, `#projects`, `#about`, `#contact`)
 - [x] Shell: Brand colors updated from actual logo SVGs (Aquariux `#0F4394`, Amaris `#d4a99a`, GMO `#D62825`, Hitachi `#E8000D`)
-- [x] Shell builds successfully (`next build` ✓)
+- [x] Shell: Upgrade Next.js 14 → 15, React 18 → 19 (ESLint v9 flat config compatibility)
+- [x] Shell: ESLint configured with flat config (`eslint.config.mjs`), lint script migrated from `next lint` to `eslint src`
+- [x] Shell: `--turbopack` flag added to dev script
+- [x] Shell builds successfully (`next build` ✓), typecheck ✓, lint ✓
 - [ ] Deploy shell skeleton to Vercel
 
 ### Phase 2 — Hitachi Showcase ⏳ Not Started
