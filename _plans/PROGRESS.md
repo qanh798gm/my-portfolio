@@ -8,10 +8,10 @@
 
 | Item          | Status                        |
 | ------------- | ----------------------------- |
-| Overall Phase | Phase 1 — Foundation Complete |
+| Overall Phase | Phase 1 — Foundation Complete ✅ |
 | Last Updated  | 2026-04-05                    |
 | Live URL      | Not deployed yet              |
-| GitHub Repo   | Not created yet               |
+| GitHub Repo   | https://github.com/qanh798gm  |
 
 ---
 
@@ -30,28 +30,31 @@
 - [x] Scaffold `packages/config` (shared ESLint + TypeScript configs)
 - [x] Scaffold `packages/tokens` (`@portfolio/tokens`) — 6 themes defined
 - [x] Scaffold `packages/ui` (`@portfolio/ui`) — Button, Badge, Spinner atoms
-- [x] Scaffold `apps/shell` (Next.js 14, App Router, TypeScript)
+- [x] Scaffold `apps/shell` (Next.js 15, App Router, TypeScript, React 19)
 - [x] Shell: global layout (Navbar, Footer)
-- [x] Shell: Fix Tailwind CSS v4 cascade issue (`@layer base` + remove autoprefixer)
-- [x] Shell: Refactor to single-page layout — Hero, Timeline, Projects, About, Contact
-- [x] Shell: Hero — simplified copy, `<AnhDo />` brand, Framer Motion stagger fade-in
-- [x] Shell: Career Timeline — horizontal switcher with company logos, `AnimatePresence` panel swap
+- [x] Shell: Fix Tailwind CSS v4 cascade issue (remove `autoprefixer`, add `@source` directives)
+- [x] Shell: Refactor to single-page layout — Hero → About → Timeline → PersonalProjects → Contact
+- [x] Shell: Hero — simplified copy, `<AnhDo />` brand, Framer Motion stagger fade-in, tech tags removed (redundant with About)
+- [x] Shell: Career Timeline — horizontal switcher (oldest→newest, left→right), company logos, `AnimatePresence` panel swap, Aquariux selected by default
 - [x] Shell: ShowcasePanel — branded company header, tech chips, demo placeholder per company
-- [x] Shell: Personal Projects section — Bliff AI coach card (in-progress)
+- [x] Shell: Personal Projects section — Bliff AI coach card centered (in-progress, private)
 - [x] Shell: About section — bio, skills matrix by category, AZ-305 cert badge
-- [x] Shell: Contact section — email, GitHub, LinkedIn with icons
-- [x] Shell: Navbar — anchor links (`#timeline`, `#projects`, `#about`, `#contact`)
-- [x] Shell: Brand colors updated from actual logo SVGs (Aquariux `#0F4394`, Amaris `#d4a99a`, GMO `#D62825`, Hitachi `#E8000D`)
+- [x] Shell: Contact section — email, GitHub, LinkedIn, phone with icons
+- [x] Shell: Navbar — anchor links (`#about`, `#timeline`, `#projects`, `#contact`)
+- [x] Shell: Brand colors — Aquariux `#8B5CF6`, Amaris `#d4a99a`, GMO `#3B82F6`, Hitachi `#B82323`
+- [x] Shell: Hitachi white SVG fixed — explicit `fill="black"` on path replaced, now renders white
+- [x] Shell: Contact info updated — email `q.anh798gm@gmail.com`, GitHub `qanh798gm`, LinkedIn `anh798gm`, phone `+84 0339 336 088`
 - [x] Shell: Upgrade Next.js 14 → 15, React 18 → 19 (ESLint v9 flat config compatibility)
-- [x] Shell: ESLint configured with flat config (`eslint.config.mjs`), lint script migrated from `next lint` to `eslint src`
+- [x] Shell: ESLint configured with flat config (`eslint.config.mjs`), lint script migrated to `eslint src`
 - [x] Shell: `--turbopack` flag added to dev script
+- [x] Shell: `src/types/css.d.ts` added — resolves TS side-effect import warning for CSS files
 - [x] Shell builds successfully (`next build` ✓), typecheck ✓, lint ✓
-- [ ] Deploy shell skeleton to Vercel
+- [ ] Deploy shell to Vercel
 
 ### Phase 2 — Hitachi Showcase ⏳ Not Started
 
 - [ ] Scaffold `apps/showcase-hitachi` (Vite + React)
-- [ ] Hitachi design tokens (dark navy + orange)
+- [ ] Hitachi design tokens (dark navy + red)
 - [ ] Logistics map (React Leaflet, fake APAC shipment data)
 - [ ] Admin dashboard (KPI cards + Recharts bar/line charts)
 - [ ] Data table with fake fleet/logistics entries
@@ -60,7 +63,7 @@
 ### Phase 3 — GMO Showcase ⏳ Not Started
 
 - [ ] Scaffold `apps/showcase-gmo` (Vite + React)
-- [ ] GMO design tokens (deep black + green/red)
+- [ ] GMO design tokens (deep black + blue)
 - [ ] Candlestick chart (TradingView Lightweight Charts, fake OHLCV)
 - [ ] Order book panel (simulated bid/ask updates)
 - [ ] Trade history feed (animated rows)
@@ -70,7 +73,7 @@
 ### Phase 4 — Amaris Showcase ⏳ Not Started
 
 - [ ] Scaffold `apps/showcase-amaris` (Vite + React)
-- [ ] Amaris design tokens (white + blue/purple)
+- [ ] Amaris design tokens (white + blush)
 - [ ] ERP portal shell with sidebar navigation
 - [ ] Time management module (calendar + leave request form)
 - [ ] Payroll module (earnings chart + payslip card)
@@ -90,10 +93,9 @@
 
 ### Phase 6 — Polish and Launch ⏳ Not Started
 
-- [ ] About page: skills matrix, certifications (AZ-305), tech radar
-- [ ] Contact page + CV download button (PDF placeholder)
 - [ ] SEO: meta tags, Open Graph images
 - [ ] README with architecture diagram + live demo link
+- [ ] CV download button (PDF placeholder)
 - [ ] Storybook public deployment
 - [ ] Final Vercel deployment review
 
@@ -104,39 +106,51 @@
 ```
 my-portfolio/                    ← pnpm monorepo + Turborepo
 ├── apps/
-│   ├── shell/                   ← Next.js 14 App Router (main entry)
-│   ├── showcase-hitachi/        ← Vite + React micro-app
-│   ├── showcase-gmo/            ← Vite + React micro-app
-│   ├── showcase-amaris/         ← Vite + React micro-app
-│   └── showcase-aquariux/       ← Vite + React micro-app (live WS data)
+│   ├── shell/                   ← Next.js 15 App Router (main entry, single-page)
+│   ├── showcase-hitachi/        ← Vite + React micro-app (planned)
+│   ├── showcase-gmo/            ← Vite + React micro-app (planned)
+│   ├── showcase-amaris/         ← Vite + React micro-app (planned)
+│   └── showcase-aquariux/       ← Vite + React micro-app (planned, live WS data)
 └── packages/
     ├── ui/                      ← @portfolio/ui (shared component lib)
     ├── tokens/                  ← @portfolio/tokens (per-app design tokens)
-    ├── hooks/                   ← @portfolio/hooks (shared React hooks)
-    └── config/                  ← shared ESLint/TS/Vite configs
+    └── config/                  ← shared ESLint/TS configs
+```
+
+### Shell Page Structure (single-page)
+
+```
+/  (home)
+├── <Navbar />               ← sticky, anchor links
+├── <HeroSection />          ← name, role, tagline, CTAs
+├── <AboutSection />         ← bio, skills matrix, AZ-305 cert
+├── <CareerTimeline />       ← horizontal switcher (oldest→newest), ShowcasePanel
+├── <PersonalProjects />     ← Bliff card (AI interview coach, in-progress)
+├── <ContactSection />       ← email, GitHub, LinkedIn, phone
+└── <Footer />
 ```
 
 ---
 
-## Key Technical Decisions (Summary)
+## Key Technical Decisions
 
-| Decision       | Choice                                      |
-| -------------- | ------------------------------------------- |
-| Shell          | Next.js 14, App Router, TypeScript          |
-| Micro-apps     | Vite + React + `@module-federation/vite`    |
-| Monorepo       | pnpm workspaces + Turborepo                 |
-| UI Library     | `@portfolio/ui`, atomic design, Storybook 8 |
-| Design Tokens  | CSS custom properties, per-app themes       |
-| Charts         | TradingView Lightweight Charts + Recharts   |
-| Maps           | React Leaflet + OpenStreetMap               |
-| Real-time data | Binance public WebSocket (no backend)       |
-| State          | Zustand per micro-app + React Query         |
-| Styling        | Tailwind CSS v4                             |
-| Testing        | Vitest + React Testing Library              |
-| Deployment     | Vercel free subdomain                       |
-| CI/CD          | GitHub Actions                              |
-| Git flow       | Trunk-based (main branch)                   |
-| Commit format  | `feat(phase-[num]): message`                |
+| Decision              | Choice                                                      |
+| --------------------- | ----------------------------------------------------------- |
+| Shell                 | Next.js 15, App Router, React 19, TypeScript                |
+| Styling               | Tailwind CSS v4 (`@tailwindcss/postcss`, no autoprefixer)   |
+| Animation             | Framer Motion (`AnimatePresence`, `whileInView` scroll fx)  |
+| Micro-apps            | Vite + React + `@module-federation/vite` (Phase 2+)         |
+| Monorepo              | pnpm workspaces + Turborepo                                 |
+| UI Library            | `@portfolio/ui`, atomic design                              |
+| Design Tokens         | CSS custom properties, per-app themes (`@portfolio/tokens`) |
+| Charts                | TradingView Lightweight Charts + Recharts (Phase 2+)        |
+| Real-time data        | Binance public WebSocket (Phase 5)                          |
+| State                 | Zustand per micro-app + React Query (Phase 2+)              |
+| Testing               | Vitest + React Testing Library                              |
+| Deployment            | Vercel free subdomain                                       |
+| CI/CD                 | GitHub Actions                                              |
+| Git flow              | Trunk-based (main branch)                                   |
+| Commit format         | `feat(phase-[num]): message`                                |
 
 ---
 
@@ -144,7 +158,6 @@ my-portfolio/                    ← pnpm monorepo + Turborepo
 
 | File                                               | Purpose                                             |
 | -------------------------------------------------- | --------------------------------------------------- |
-| [`plans/PORTFOLIO_PLAN.md`](./PORTFOLIO_PLAN.md)   | Full architecture, component details, data strategy |
-| [`plans/PROGRESS.md`](./PROGRESS.md)               | This file — current progress tracker                |
-| [`plans/GIT_CONVENTIONS.md`](./GIT_CONVENTIONS.md) | Git flow and commit format rules                    |
-| [`JD.md`](../JD.md)                                | Owner's background and experience                   |
+| [`_plans/PORTFOLIO_PLAN.md`](./PORTFOLIO_PLAN.md)  | Full architecture, component details, data strategy |
+| [`_plans/PROGRESS.md`](./PROGRESS.md)              | This file — current progress tracker                |
+| [`_plans/GIT_CONVENTIONS.md`](./GIT_CONVENTIONS.md)| Git flow and commit format rules                    |

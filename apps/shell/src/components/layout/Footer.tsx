@@ -1,7 +1,7 @@
 const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/anhdo95' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/anhdo95' },
-  { label: 'Email', href: 'mailto:doquocanh.work@gmail.com' },
+  { label: 'GitHub', href: 'https://github.com/qanh798gm' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anh798gm/' },
+  { label: 'Email', href: 'mailto:q.anh798gm@gmail.com' },
 ]
 
 export function Footer() {

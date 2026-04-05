@@ -37,7 +37,7 @@ export function PersonalProjects() {
         </motion.div>
 
         <motion.div
-          className="grid gap-6 sm:grid-cols-2"
+          className="flex justify-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -46,7 +46,7 @@ export function PersonalProjects() {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="rounded-2xl border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] p-6 transition-shadow hover:shadow-lg"
+              className="w-full max-w-md rounded-2xl border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] p-6 transition-shadow hover:shadow-lg"
             >
               {/* Header */}
               <div className="mb-3 flex items-start justify-between gap-3">

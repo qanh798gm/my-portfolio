@@ -7,7 +7,7 @@ import { careerData, type CareerEntry } from '@/lib/career-data'
 import { ShowcasePanel } from './ShowcasePanel'
 
 export function CareerTimeline() {
-  const [activeId, setActiveId] = useState<string>(careerData[0]!.id)
+  const [activeId, setActiveId] = useState<string>(careerData[careerData.length - 1]!.id)
 
   const activeEntry = careerData.find((e) => e.id === activeId) ?? careerData[0]!
 
@@ -79,7 +79,7 @@ function TimelineMilestone({ entry, isActive, onClick }: MilestoneProps) {
     <li className="flex flex-1 flex-col items-center">
       <button
         onClick={onClick}
-        className="group flex flex-col items-center gap-3 focus:outline-none"
+        className="group flex cursor-pointer flex-col items-center gap-3 focus:outline-none"
         aria-pressed={isActive}
         aria-label={`View ${entry.shortName} showcase`}
       >
@@ -120,7 +120,7 @@ function TimelineMilestone({ entry, isActive, onClick }: MilestoneProps) {
             {entry.shortName}
           </p>
           <p className="mt-0.5 text-[10px] text-[var(--color-text-muted)]">
-            {entry.period.start.split(' ')[1]}
+            {entry.period.start} - {entry.period.end}
           </p>
         </div>
       </button>

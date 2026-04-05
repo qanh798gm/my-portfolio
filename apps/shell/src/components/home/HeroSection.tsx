@@ -2,17 +2,6 @@
 
 import { motion } from 'framer-motion'
 
-const techHighlights = [
-  'React / TypeScript',
-  'Vue 3 / Angular',
-  'Micro-frontends',
-  'Module Federation',
-  'WebSocket / Real-time',
-  'Next.js / Vite',
-  'Tailwind CSS',
-  'Azure / AWS',
-]
-
 const containerVariants = {
   hidden: {},
   visible: {
@@ -91,7 +80,7 @@ export function HeroSection() {
         {/* CTAs */}
         <motion.div
           variants={itemVariants}
-          className="mb-16 flex flex-wrap items-center justify-center gap-3"
+          className="flex flex-wrap items-center justify-center gap-3"
         >
           <a
             href="#timeline"
@@ -106,21 +95,6 @@ export function HeroSection() {
           >
             Download CV
           </a>
-        </motion.div>
-
-        {/* Tech tags */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-wrap justify-center gap-2"
-        >
-          {techHighlights.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] px-3 py-1 text-xs text-[var(--color-text-muted)]"
-            >
-              {tech}
-            </span>
-          ))}
         </motion.div>
       </motion.div>
     </section>

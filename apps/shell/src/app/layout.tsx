@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
-import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     'Next.js',
     'Vietnam',
   ],
-  authors: [{ name: 'Anh Quoc Do', url: 'https://github.com/anhdo95' }],
+  authors: [{ name: 'Anh Quoc Do', url: 'https://github.com/qanh798gm' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
