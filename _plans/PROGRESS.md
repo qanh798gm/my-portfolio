@@ -8,8 +8,8 @@
 
 | Item          | Status                        |
 | ------------- | ----------------------------- |
-| Overall Phase | Phase 1 — Foundation Complete ✅ |
-| Last Updated  | 2026-04-05                    |
+| Overall Phase | Phase 2 — Hitachi MF Showcase ✅ Complete |
+| Last Updated  | 2026-04-06                    |
 | Live URL      | Not deployed yet              |
 | GitHub Repo   | https://github.com/qanh798gm  |
 
@@ -51,14 +51,36 @@
 - [x] Shell builds successfully (`next build` ✓), typecheck ✓, lint ✓
 - [ ] Deploy shell to Vercel
 
-### Phase 2 — Hitachi Showcase ⏳ Not Started
+### Phase 2 — Hitachi Showcase ✅ Complete
 
-- [ ] Scaffold `apps/showcase-hitachi` (Vite + React)
-- [ ] Hitachi design tokens (dark navy + red)
-- [ ] Logistics map (React Leaflet, fake APAC shipment data)
-- [ ] Admin dashboard (KPI cards + Recharts bar/line charts)
-- [ ] Data table with fake fleet/logistics entries
-- [ ] Wire into shell via `@module-federation/vite`
+> **Architecture Decision:** `apps/showcase-hitachi` is a standalone **Vite + React** app that exposes
+> `HitachiApp` via **Module Federation** (`@module-federation/vite`). The shell consumes it using
+> `@module-federation/enhanced/webpack` with `next/dynamic({ ssr: false })` so server-side rendering
+> never tries to resolve the federated remote.
+>
+> **Embedding approach:** `HitachiApp` mounts inline in `ShowcasePanel` via MF — no iframe, no page
+> navigation, no extra click. The app uses `MemoryRouter` internally so its routing is self-contained
+> and doesn't interfere with the shell's Next.js router.
+>
+> **Why not `@module-federation/nextjs-mf`:** Explicitly does not support App Router (only Pages Router).
+> **Why not iframe:** Shell layout bleeds in; internal navigation breaks.
+
+- [x] Scaffold `apps/showcase-hitachi` — Vite + React + TypeScript, port 5001
+- [x] Add `recharts` + `react-router-dom` dependencies
+- [x] Configure `@module-federation/vite` — expose `./HitachiApp` as `showcase_hitachi`
+- [x] Create fake data module (`src/data/logistics-data.ts`) — 12 schedules, 10 vehicles, 15 cargo items, chart data
+- [x] Create `HitachiSidebar` component — NavLink-based nav with active state
+- [x] Create `HitachiTopBar` component — `useLocation()` dynamic title + user avatar
+- [x] Create shared UI components — `KpiCard`, `DataTable` (generic), `StatusBadge`
+- [x] Create `HitachiApp.tsx` root — `MemoryRouter` + `Routes` for Dashboard/Schedules/Vehicles/Cargo
+- [x] Dashboard page — 4 KPI cards + Recharts Bar + Line + Pie/Donut charts + ops summary
+- [x] Schedules page — table + Google Maps iframe toggle on row click
+- [x] Vehicles page — fleet data table with status pills
+- [x] Cargo page — cargo inventory table with status pills
+- [x] Configure shell `next.config.mjs` — `@module-federation/enhanced/webpack`, register `showcase_hitachi` remote
+- [x] `ShowcasePanel.tsx` — `next/dynamic({ ssr: false })` mounts `HitachiApp` inline for Hitachi
+- [x] Shell `/showcase/hitachi` route — `next/dynamic({ ssr: false })` full-screen standalone view
+- [x] Build passes: `showcase-hitachi` Vite build ✓ (`remoteEntry.js` generated); shell `next build` ✓ (13 pages)
 
 ### Phase 3 — GMO Showcase ⏳ Not Started
 
@@ -107,7 +129,10 @@
 my-portfolio/                    ← pnpm monorepo + Turborepo
 ├── apps/
 │   ├── shell/                   ← Next.js 15 App Router (main entry, single-page)
-│   ├── showcase-hitachi/        ← Vite + React micro-app (planned)
+│   │                               Consumer: @module-federation/enhanced/webpack
+│   │                               Remotes: showcase_hitachi (port 5001)
+│   ├── showcase-hitachi/        ← Vite + React MF remote ✅ (port 5001)
+│   │                               Exposes: ./HitachiApp via @module-federation/vite
 │   ├── showcase-gmo/            ← Vite + React micro-app (planned)
 │   ├── showcase-amaris/         ← Vite + React micro-app (planned)
 │   └── showcase-aquariux/       ← Vite + React micro-app (planned, live WS data)
@@ -115,6 +140,19 @@ my-portfolio/                    ← pnpm monorepo + Turborepo
     ├── ui/                      ← @portfolio/ui (shared component lib)
     ├── tokens/                  ← @portfolio/tokens (per-app design tokens)
     └── config/                  ← shared ESLint/TS configs
+```
+
+### Module Federation Pattern
+
+```
+showcase-hitachi (Vite remote, port 5001)
+  vite.config.ts: federation({ name: 'showcase_hitachi', exposes: { './HitachiApp': ... } })
+  → dist/remoteEntry.js
+
+shell (Next.js consumer)
+  next.config.mjs: ModuleFederationPlugin({ remotes: { showcase_hitachi: '...@.../remoteEntry.js' } })
+  ShowcasePanel.tsx: next/dynamic(() => import('showcase_hitachi/HitachiApp'), { ssr: false })
+  → Loads HitachiApp at runtime in the browser; zero SSR interference
 ```
 
 ### Shell Page Structure (single-page)
@@ -143,7 +181,7 @@ my-portfolio/                    ← pnpm monorepo + Turborepo
 | Monorepo              | pnpm workspaces + Turborepo                                 |
 | UI Library            | `@portfolio/ui`, atomic design                              |
 | Design Tokens         | CSS custom properties, per-app themes (`@portfolio/tokens`) |
-| Charts                | TradingView Lightweight Charts + Recharts (Phase 2+)        |
+| Charts                | Recharts (bar/line/pie) — Hitachi dashboard ✅; TradingView Lightweight Charts (Phase 3+) |
 | Real-time data        | Binance public WebSocket (Phase 5)                          |
 | State                 | Zustand per micro-app + React Query (Phase 2+)              |
 | Testing               | Vitest + React Testing Library                              |
