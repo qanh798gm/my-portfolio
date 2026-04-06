@@ -10,25 +10,50 @@ const NAV_ITEMS = [
 export function HitachiSidebar() {
   return (
     <aside
-      className="flex h-full w-56 shrink-0 flex-col border-r"
-      style={{ backgroundColor: '#0d1117', borderColor: '#21262d' }}
+      style={{
+        display: 'flex',
+        height: '100%',
+        width: 200,
+        flexShrink: 0,
+        flexDirection: 'column',
+        borderRight: '1px solid #21262d',
+        backgroundColor: '#0d1117',
+      }}
     >
       {/* Logo area */}
       <div
-        className="flex h-14 items-center gap-3 border-b px-4"
-        style={{ borderColor: '#21262d' }}
+        style={{
+          display: 'flex',
+          height: 56,
+          alignItems: 'center',
+          gap: 12,
+          borderBottom: '1px solid #21262d',
+          padding: '0 16px',
+          flexShrink: 0,
+        }}
       >
         <div
-          className="flex h-7 w-7 items-center justify-center rounded font-bold text-sm"
-          style={{ backgroundColor: '#e8000d', color: '#fff' }}
+          style={{
+            display: 'flex',
+            height: 28,
+            width: 28,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 6,
+            fontWeight: 700,
+            fontSize: 13,
+            backgroundColor: '#e8000d',
+            color: '#fff',
+            flexShrink: 0,
+          }}
         >
           H
         </div>
         <div>
-          <p style={{ color: '#e6edf3', fontSize: 12, fontWeight: 700, lineHeight: 1.2 }}>
+          <p style={{ color: '#e6edf3', fontSize: 12, fontWeight: 700, lineHeight: 1.2, margin: 0 }}>
             Hitachi
           </p>
-          <p style={{ color: '#484f58', fontSize: 11, lineHeight: 1.2 }}>
+          <p style={{ color: '#484f58', fontSize: 11, lineHeight: 1.2, margin: 0 }}>
             LogiTrack
           </p>
         </div>
@@ -47,7 +72,7 @@ export function HitachiSidebar() {
               gap: 12,
               borderRadius: 8,
               padding: '8px 12px',
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: 500,
               textDecoration: 'none',
               transition: 'background 0.15s',
@@ -56,15 +81,15 @@ export function HitachiSidebar() {
               borderLeft: isActive ? '2px solid #e8000d' : '2px solid transparent',
             })}
           >
-            <span style={{ fontSize: 16 }} aria-hidden="true">{item.icon}</span>
+            <span style={{ fontSize: 15, lineHeight: 1 }} aria-hidden="true">{item.icon}</span>
             {item.label}
           </NavLink>
         ))}
       </nav>
 
       {/* Footer */}
-      <div style={{ borderTop: '1px solid #21262d', padding: '12px 16px' }}>
-        <p style={{ color: '#484f58', fontSize: 11 }}>v2.4.1 — Demo Mode</p>
+      <div style={{ borderTop: '1px solid #21262d', padding: '10px 16px', flexShrink: 0 }}>
+        <p style={{ color: '#484f58', fontSize: 11, margin: 0 }}>v2.4.1 — Demo Mode</p>
       </div>
     </aside>
   )

@@ -16,6 +16,26 @@ interface DataTableProps<T = any> {
   getRowId?: (row: T) => string
 }
 
+const thStyle: React.CSSProperties = {
+  padding: '10px 16px',
+  textAlign: 'left',
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: 'uppercase',
+  letterSpacing: '0.06em',
+  color: '#8d96a0',
+  backgroundColor: '#161b22',
+  whiteSpace: 'nowrap',
+}
+
+const tdStyle: React.CSSProperties = {
+  padding: '10px 16px',
+  textAlign: 'left',
+  fontSize: 13,
+  color: '#e6edf3',
+  verticalAlign: 'middle',
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DataTable<T = any>({
   columns,
@@ -26,19 +46,25 @@ export function DataTable<T = any>({
 }: DataTableProps<T>) {
   return (
     <div
-      className="overflow-hidden rounded-xl border"
-      style={{ borderColor: '#30363d', backgroundColor: '#1c2128' }}
+      style={{
+        borderRadius: 12,
+        border: '1px solid #30363d',
+        backgroundColor: '#1c2128',
+        overflow: 'hidden',
+      }}
     >
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+      <div
+        style={{
+          overflowX: 'auto',
+          overflowY: 'auto',
+          maxHeight: 420,
+        }}
+      >
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #30363d', backgroundColor: '#161b22' }}>
+            <tr style={{ borderBottom: '1px solid #30363d' }}>
               {columns.map((col) => (
-                <th
-                  key={String(col.key)}
-                  className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: '#8d96a0' }}
-                >
+                <th key={String(col.key)} style={thStyle}>
                   {col.header}
                 </th>
               ))}
@@ -52,11 +78,11 @@ export function DataTable<T = any>({
                 <tr
                   key={rowId}
                   onClick={() => onRowClick?.(row)}
-                  className="transition-colors"
                   style={{
                     borderBottom: idx < data.length - 1 ? '1px solid #21262d' : undefined,
-                    backgroundColor: isSelected ? '#e8000d18' : undefined,
+                    backgroundColor: isSelected ? '#e8000d18' : 'transparent',
                     cursor: onRowClick ? 'pointer' : undefined,
+                    transition: 'background-color 0.15s',
                   }}
                   onMouseEnter={(e) => {
                     if (!isSelected) {
@@ -65,16 +91,12 @@ export function DataTable<T = any>({
                   }}
                   onMouseLeave={(e) => {
                     if (!isSelected) {
-                      ;(e.currentTarget as HTMLTableRowElement).style.backgroundColor = ''
+                      ;(e.currentTarget as HTMLTableRowElement).style.backgroundColor = 'transparent'
                     }
                   }}
                 >
                   {columns.map((col) => (
-                    <td
-                      key={String(col.key)}
-                      className="px-4 py-3"
-                      style={{ color: '#e6edf3' }}
-                    >
+                    <td key={String(col.key)} style={tdStyle}>
                       {col.render
                         ? col.render(row)
                         : String((row as Record<string, unknown>)[col.key as string] ?? '')}

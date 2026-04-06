@@ -157,21 +157,53 @@ function MFDemoArea({ entry }: { entry: CareerEntry }) {
     >
       {/* Label bar */}
       <div
-        className="flex items-center justify-between border-b px-3 py-2"
         style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: `1px solid ${entry.accentColor}33`,
           backgroundColor: `${entry.accentColor}12`,
-          borderColor: `${entry.accentColor}33`,
+          padding: '6px 12px',
         }}
       >
-        <span className="text-xs font-medium" style={{ color: entry.accentColor }}>
+        <span style={{ fontSize: 12, fontWeight: 500, color: entry.accentColor }}>
           🖥️ Live Demo — {entry.shortName} Logistics Dashboard
         </span>
         <Link
           href={entry.showcaseRoute}
-          className="text-xs transition-opacity hover:opacity-80"
-          style={{ color: entry.accentColor }}
+          title="Toggle full screen"
+          aria-label="Open full screen"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 28,
+            height: 28,
+            borderRadius: 6,
+            border: `1px solid ${entry.accentColor}44`,
+            backgroundColor: `${entry.accentColor}18`,
+            color: entry.accentColor,
+            textDecoration: 'none',
+            transition: 'background-color 0.15s, border-color 0.15s',
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget
+            el.style.backgroundColor = `${entry.accentColor}33`
+            el.style.borderColor = `${entry.accentColor}88`
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget
+            el.style.backgroundColor = `${entry.accentColor}18`
+            el.style.borderColor = `${entry.accentColor}44`
+          }}
         >
-          Open full screen ↗
+          {/* Expand / enter-fullscreen icon */}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+            <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+            <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+          </svg>
         </Link>
       </div>
 

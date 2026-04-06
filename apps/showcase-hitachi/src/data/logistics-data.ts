@@ -1,4 +1,4 @@
-﻿// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+﻿// ─── Types ────────────────────────────────────────────────────────────────────
 
 export type ScheduleStatus = 'On-Time' | 'Delayed' | 'In Transit' | 'Completed'
 export type VehicleStatus = 'Available' | 'On Route' | 'Maintenance'
@@ -53,24 +53,24 @@ export interface CargoCategory {
   color: string
 }
 
-// â”€â”€â”€ Schedules â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Schedules ────────────────────────────────────────────────────────────────
 
 export const schedules: Schedule[] = [
-  { id: 'SCH-001', route: 'BKK â†’ SIN', origin: 'Bangkok', destination: 'Singapore', departure: '2024-03-01 08:00', status: 'Completed', driver: 'Somchai P.', vehicleId: 'VH-003', mapQuery: 'Singapore' },
-  { id: 'SCH-002', route: 'SIN â†’ TYO', origin: 'Singapore', destination: 'Tokyo', departure: '2024-03-03 14:00', status: 'Completed', driver: 'Kenji T.', vehicleId: 'VH-007', mapQuery: 'Tokyo,Japan' },
-  { id: 'SCH-003', route: 'TYO â†’ OSK', origin: 'Tokyo', destination: 'Osaka', departure: '2024-03-05 09:30', status: 'Completed', driver: 'Yuki M.', vehicleId: 'VH-002', mapQuery: 'Osaka,Japan' },
-  { id: 'SCH-004', route: 'BKK â†’ HCM', origin: 'Bangkok', destination: 'Ho Chi Minh City', departure: '2024-03-07 11:00', status: 'Completed', driver: 'Nguyen V.', vehicleId: 'VH-005', mapQuery: 'Ho+Chi+Minh+City,Vietnam' },
-  { id: 'SCH-005', route: 'SIN â†’ KUL', origin: 'Singapore', destination: 'Kuala Lumpur', departure: '2024-03-10 07:00', status: 'On-Time', driver: 'Ahmad R.', vehicleId: 'VH-001', mapQuery: 'Kuala+Lumpur,Malaysia' },
-  { id: 'SCH-006', route: 'HCM â†’ HAN', origin: 'Ho Chi Minh City', destination: 'Hanoi', departure: '2024-03-11 13:00', status: 'In Transit', driver: 'Tran H.', vehicleId: 'VH-009', mapQuery: 'Hanoi,Vietnam' },
-  { id: 'SCH-007', route: 'OSK â†’ NGY', origin: 'Osaka', destination: 'Nagoya', departure: '2024-03-12 10:00', status: 'On-Time', driver: 'Hiroshi K.', vehicleId: 'VH-004', mapQuery: 'Nagoya,Japan' },
-  { id: 'SCH-008', route: 'KUL â†’ BKK', origin: 'Kuala Lumpur', destination: 'Bangkok', departure: '2024-03-12 15:30', status: 'Delayed', driver: 'Suporn C.', vehicleId: 'VH-006', mapQuery: 'Bangkok,Thailand' },
-  { id: 'SCH-009', route: 'TYO â†’ SIN', origin: 'Tokyo', destination: 'Singapore', departure: '2024-03-13 06:00', status: 'In Transit', driver: 'Kenji T.', vehicleId: 'VH-007', mapQuery: 'Singapore' },
-  { id: 'SCH-010', route: 'SIN â†’ HCM', origin: 'Singapore', destination: 'Ho Chi Minh City', departure: '2024-03-13 16:00', status: 'On-Time', driver: 'Le Q.', vehicleId: 'VH-010', mapQuery: 'Ho+Chi+Minh+City,Vietnam' },
-  { id: 'SCH-011', route: 'BKK â†’ SIN', origin: 'Bangkok', destination: 'Singapore', departure: '2024-03-14 08:00', status: 'Delayed', driver: 'Somchai P.', vehicleId: 'VH-003', mapQuery: 'Singapore' },
-  { id: 'SCH-012', route: 'HAN â†’ SIN', origin: 'Hanoi', destination: 'Singapore', departure: '2024-03-15 09:00', status: 'On-Time', driver: 'Pham D.', vehicleId: 'VH-008', mapQuery: 'Singapore' },
+  { id: 'SCH-001', route: 'BKK -> SIN', origin: 'Bangkok', destination: 'Singapore', departure: '2024-03-01 08:00', status: 'Completed', driver: 'Somchai P.', vehicleId: 'VH-003', mapQuery: 'Singapore' },
+  { id: 'SCH-002', route: 'SIN -> TYO', origin: 'Singapore', destination: 'Tokyo', departure: '2024-03-03 14:00', status: 'Completed', driver: 'Kenji T.', vehicleId: 'VH-007', mapQuery: 'Tokyo,Japan' },
+  { id: 'SCH-003', route: 'TYO -> OSK', origin: 'Tokyo', destination: 'Osaka', departure: '2024-03-05 09:30', status: 'Completed', driver: 'Yuki M.', vehicleId: 'VH-002', mapQuery: 'Osaka,Japan' },
+  { id: 'SCH-004', route: 'BKK -> HCM', origin: 'Bangkok', destination: 'Ho Chi Minh City', departure: '2024-03-07 11:00', status: 'Completed', driver: 'Nguyen V.', vehicleId: 'VH-005', mapQuery: 'Ho+Chi+Minh+City,Vietnam' },
+  { id: 'SCH-005', route: 'SIN -> KUL', origin: 'Singapore', destination: 'Kuala Lumpur', departure: '2024-03-10 07:00', status: 'On-Time', driver: 'Ahmad R.', vehicleId: 'VH-001', mapQuery: 'Kuala+Lumpur,Malaysia' },
+  { id: 'SCH-006', route: 'HCM -> HAN', origin: 'Ho Chi Minh City', destination: 'Hanoi', departure: '2024-03-11 13:00', status: 'In Transit', driver: 'Tran H.', vehicleId: 'VH-009', mapQuery: 'Hanoi,Vietnam' },
+  { id: 'SCH-007', route: 'OSK -> NGY', origin: 'Osaka', destination: 'Nagoya', departure: '2024-03-12 10:00', status: 'On-Time', driver: 'Hiroshi K.', vehicleId: 'VH-004', mapQuery: 'Nagoya,Japan' },
+  { id: 'SCH-008', route: 'KUL -> BKK', origin: 'Kuala Lumpur', destination: 'Bangkok', departure: '2024-03-12 15:30', status: 'Delayed', driver: 'Suporn C.', vehicleId: 'VH-006', mapQuery: 'Bangkok,Thailand' },
+  { id: 'SCH-009', route: 'TYO -> SIN', origin: 'Tokyo', destination: 'Singapore', departure: '2024-03-13 06:00', status: 'In Transit', driver: 'Kenji T.', vehicleId: 'VH-007', mapQuery: 'Singapore' },
+  { id: 'SCH-010', route: 'SIN -> HCM', origin: 'Singapore', destination: 'Ho Chi Minh City', departure: '2024-03-13 16:00', status: 'On-Time', driver: 'Le Q.', vehicleId: 'VH-010', mapQuery: 'Ho+Chi+Minh+City,Vietnam' },
+  { id: 'SCH-011', route: 'BKK -> SIN', origin: 'Bangkok', destination: 'Singapore', departure: '2024-03-14 08:00', status: 'Delayed', driver: 'Somchai P.', vehicleId: 'VH-003', mapQuery: 'Singapore' },
+  { id: 'SCH-012', route: 'HAN -> SIN', origin: 'Hanoi', destination: 'Singapore', departure: '2024-03-15 09:00', status: 'On-Time', driver: 'Pham D.', vehicleId: 'VH-008', mapQuery: 'Singapore' },
 ]
 
-// â”€â”€â”€ Vehicles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Vehicles ─────────────────────────────────────────────────────────────────
 
 export const vehicles: Vehicle[] = [
   { id: 'VH-001', type: 'Heavy Truck', plate: 'SGP-4421', driver: 'Ahmad R.', capacity: '20 tons', status: 'On Route', lastLocation: 'Kuala Lumpur' },
@@ -85,7 +85,7 @@ export const vehicles: Vehicle[] = [
   { id: 'VH-010', type: 'Heavy Truck', plate: 'SGP-8890', driver: 'Le Q.', capacity: '20 tons', status: 'On Route', lastLocation: 'Singapore' },
 ]
 
-// â”€â”€â”€ Cargo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Cargo ────────────────────────────────────────────────────────────────────
 
 export const cargoItems: CargoItem[] = [
   { id: 'CGO-001', description: 'Industrial Machinery Parts', weight: '4,200 kg', origin: 'Bangkok', destination: 'Singapore', scheduleId: 'SCH-001', status: 'Delivered' },
@@ -105,7 +105,7 @@ export const cargoItems: CargoItem[] = [
   { id: 'CGO-015', description: 'Packaging Materials', weight: '1,600 kg', origin: 'Singapore', destination: 'Kuala Lumpur', scheduleId: 'SCH-005', status: 'In Transit' },
 ]
 
-// â”€â”€â”€ Chart data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Chart data ───────────────────────────────────────────────────────────────
 
 export const weeklyShipments: WeeklyShipment[] = [
   { week: 'W1 Feb', shipments: 18, delivered: 16 },
@@ -138,7 +138,7 @@ export const cargoCategories: CargoCategory[] = [
   { name: 'Other', value: 6, color: '#484f58' },
 ]
 
-// â”€â”€â”€ KPI summary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── KPI summary ──────────────────────────────────────────────────────────────
 
 export const kpiData = {
   activeSchedules: { value: 6, delta: '+2', trend: 'up' as const },

@@ -49,7 +49,7 @@ export function HitachiTopBar() {
             border: '1px solid #30363d',
           }}
         >
-          Mar 15, 2024
+          Dec 24, 2019
         </span>
 
         {/* User avatar */}

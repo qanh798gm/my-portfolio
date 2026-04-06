@@ -27,12 +27,28 @@ export function StatusBadge({ status }: StatusBadgeProps) {
 
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium"
-      style={{ backgroundColor: styles.bg, color: styles.text }}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 6,
+        borderRadius: 9999,
+        padding: '2px 10px',
+        fontSize: 12,
+        fontWeight: 500,
+        backgroundColor: styles.bg,
+        color: styles.text,
+        whiteSpace: 'nowrap',
+      }}
     >
       <span
-        className="h-1.5 w-1.5 rounded-full"
-        style={{ backgroundColor: styles.dot }}
+        style={{
+          display: 'inline-block',
+          width: 6,
+          height: 6,
+          borderRadius: '50%',
+          backgroundColor: styles.dot,
+          flexShrink: 0,
+        }}
         aria-hidden="true"
       />
       {status}
