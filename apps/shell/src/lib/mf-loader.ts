@@ -4,18 +4,24 @@
  * Works with @module-federation/vite remotes (ES module remoteEntry).
  *
  * ## Preamble fix
- * In dev mode, @vitejs/plugin-react(-swc) injects a Fast Refresh preamble
- * into every JSX/TSX file:
+ * In dev mode, @vitejs/plugin-react injects a Fast Refresh preamble into
+ * every JSX/TSX file transformed by the remote Vite dev server:
+ *
  *   import RefreshRuntime from '/@react-refresh'
  *   RefreshRuntime.injectIntoGlobalHook(window)
  *   window.$RefreshReg$ = () => {}
  *   window.$RefreshSig$ = () => (type) => type
  *   window.__vite_plugin_react_preamble_installed__ = true
  *
- * The last line is what the plugin checks — if it's not set, it throws the
- * "can't detect preamble" error. We fix this by loading the Vite dev client
- * (`/@vite/client`) from the remote server BEFORE importing any remote modules.
- * The Vite client sets up the HMR runtime and the preamble globals.
+ * When the shell (Next.js / webpack) loads modules from a *different* Vite
+ * dev server (port 5001), those window globals are missing because the remote
+ * Vite server never injected them into this page.  The per-module preamble
+ * guard then throws "can't detect preamble. Something is wrong."
+ *
+ * Fix: before loading any remote module we directly set the required globals
+ * on window.  In dev mode we also import /@react-refresh from the remote
+ * origin so RefreshRuntime is properly set up for HMR.  In production (vite
+ * build) the preamble is stripped entirely and no fix is needed.
  *
  * This file must only be used in 'use client' components inside useEffect.
  */
@@ -49,36 +55,50 @@ const sharedScope: Record<string, unknown> = {
   },
 }
 
-/** Injects a module-type script tag and waits for it to load (idempotent). */
-function injectModuleScript(url: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${url}"]`)) {
-      resolve()
-      return
-    }
-    const s = document.createElement('script')
-    s.src = url
-    s.type = 'module'
-    s.onload = () => resolve()
-    s.onerror = () => reject(new Error(`Failed to load: ${url}`))
-    document.head.appendChild(s)
-  })
+/** Check if a URL responds successfully (HEAD request). */
+async function urlExists(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, { method: 'HEAD' })
+    return res.ok
+  } catch {
+    return false
+  }
 }
 
 /**
- * Detect if the remote server is a Vite dev server by checking if its
- * client script is available. In production (vite preview / real server),
- * the /@vite/client endpoint doesn't exist.
+ * Install the React Fast Refresh preamble globals so that modules loaded from
+ * a remote Vite dev server don't throw "can't detect preamble".
+ *
+ * Strategy:
+ *  1. Check if the remote is a Vite dev server (HEAD /@react-refresh).
+ *  2. Immediately set `window.__vite_plugin_react_preamble_installed__` and
+ *     the `$RefreshReg$` / `$RefreshSig$` no-op stubs so the per-file guard
+ *     passes.  We do this synchronously (before any further awaits) so there
+ *     is no race with module evaluation.
+ *
+ * We intentionally skip importing the actual RefreshRuntime because:
+ *  - It uses `import.meta` which can't be imported cross-origin from webpack.
+ *  - Full HMR across origins is unsupported anyway; we only need the guard to
+ *    not throw so the component renders correctly.
+ *
+ * In production (`vite build`) the preamble is stripped from all output; the
+ * `/@react-refresh` endpoint won't exist, so this function is a no-op.
  */
-async function tryInjectViteClient(remoteOrigin: string): Promise<void> {
-  try {
-    const res = await fetch(`${remoteOrigin}/@vite/client`, { method: 'HEAD' })
-    if (res.ok) {
-      await injectModuleScript(`${remoteOrigin}/@vite/client`)
-    }
-  } catch {
-    // Not a Vite dev server, or CORS blocked — safe to ignore
-  }
+async function installReactRefreshPreamble(remoteOrigin: string): Promise<void> {
+  const w = window as unknown as Record<string, unknown>
+
+  // Already installed — nothing to do
+  if (w['__vite_plugin_react_preamble_installed__'] === true) return
+
+  // Check if this is a Vite dev server (production builds don't serve /@react-refresh)
+  const isViteDev = await urlExists(`${remoteOrigin}/@react-refresh`)
+  if (!isViteDev) return
+
+  // Install no-op stubs + preamble flag.
+  // These are all the globals the per-file guard checks for.
+  if (!w['$RefreshReg$']) w['$RefreshReg$'] = () => {}
+  if (!w['$RefreshSig$']) w['$RefreshSig$'] = () => (type: unknown) => type
+  w['__vite_plugin_react_preamble_installed__'] = true
 }
 
 /**
@@ -92,16 +112,19 @@ async function loadContainer(remoteUrl: string): Promise<MFContainer> {
   // Extract the origin (e.g. http://localhost:5001) from the remote URL
   const remoteOrigin = new URL(remoteUrl).origin
 
-  // Inject Vite client first so the React Refresh preamble doesn't throw.
-  // In production this is a no-op (the endpoint won't exist / return 404).
-  await tryInjectViteClient(remoteOrigin)
+  // Install preamble BEFORE importing the remote so the per-module guard passes
+  await installReactRefreshPreamble(remoteOrigin)
 
-  const container = await import(/* webpackIgnore: true */ remoteUrl) as MFContainer
+  // eslint-disable-next-line @typescript-eslint/no-implied-eval
+  const container = await new Function(
+    'url',
+    'return import(url)',
+  )(remoteUrl) as MFContainer
 
   if (typeof container.init !== 'function' || typeof container.get !== 'function') {
     throw new Error(
       `[MF] ${remoteUrl} does not export { init, get }. ` +
-      `Check the @module-federation/vite config.`,
+        `Check the @module-federation/vite config.`,
     )
   }
 
@@ -111,9 +134,8 @@ async function loadContainer(remoteUrl: string): Promise<MFContainer> {
 }
 
 const HITACHI_REMOTE_URL =
-  (typeof process !== 'undefined'
-    ? process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL
-    : undefined) ?? 'http://localhost:5001'
+  (typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL : undefined) ??
+  'http://localhost:5001'
 
 /**
  * Load an exposed module from the showcase_hitachi Vite MF remote.

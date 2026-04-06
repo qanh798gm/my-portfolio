@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { federation } from '@module-federation/vite'
 
 export default defineConfig({
   plugins: [
+    react(),
     federation({
       name: 'showcase_hitachi',
       filename: 'remoteEntry.js',
@@ -16,7 +17,6 @@ export default defineConfig({
         'react-router-dom': { singleton: true },
       },
     }),
-    react(),
   ],
   build: {
     target: 'esnext',
