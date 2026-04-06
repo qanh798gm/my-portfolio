@@ -8,7 +8,7 @@
 
 | Item          | Status                        |
 | ------------- | ----------------------------- |
-| Overall Phase | Phase 2 — Hitachi MF Showcase ✅ Complete |
+| Overall Phase | Phase 1 — Foundation + Hitachi MF Showcase ✅ Complete |
 | Last Updated  | 2026-04-06                    |
 | Live URL      | Not deployed yet              |
 | GitHub Repo   | https://github.com/qanh798gm  |
@@ -24,7 +24,7 @@
 - [x] PROGRESS.md created (this file)
 - [x] GIT_CONVENTIONS.md created
 
-### Phase 1 — Foundation ✅ Complete
+### Phase 1 — Foundation + Hitachi MF Showcase ✅ Complete
 
 - [x] Init pnpm monorepo with Turborepo
 - [x] Scaffold `packages/config` (shared ESLint + TypeScript configs)
@@ -51,7 +51,7 @@
 - [x] Shell builds successfully (`next build` ✓), typecheck ✓, lint ✓
 - [ ] Deploy shell to Vercel
 
-### Phase 2 — Hitachi Showcase ✅ Complete
+### Phase 1b — Hitachi MF Showcase ✅ Complete
 
 > **Architecture Decision:** `apps/showcase-hitachi` is a standalone **Vite + React** app that exposes
 > `HitachiApp` via **Module Federation** (`@module-federation/vite`). The shell consumes it using
@@ -81,8 +81,15 @@
 - [x] `ShowcasePanel.tsx` — `next/dynamic({ ssr: false })` mounts `HitachiApp` inline for Hitachi
 - [x] Shell `/showcase/hitachi` route — `next/dynamic({ ssr: false })` full-screen standalone view
 - [x] Build passes: `showcase-hitachi` Vite build ✓ (`remoteEntry.js` generated); shell `next build` ✓ (13 pages)
+- [x] Fix preamble error — `@vitejs/plugin-react-swc` → `@vitejs/plugin-react`; `react()` before `federation()` in `vite.config.ts`
+- [x] Fix preamble runtime — `mf-loader.ts` sets `window.__vite_plugin_react_preamble_installed__` + stubs before loading remote
+- [x] Fix MF import — `new Function('url', 'return import(url)')` prevents webpack static bundling of cross-origin import
+- [x] Fix table alignment + scroll — all `DataTable` / `KpiCard` / `StatusBadge` / `HitachiSidebar` cells use inline styles (no Tailwind in Vite app)
+- [x] Fix data encoding — route values mojibake (`â†'` → `->`) in `logistics-data.ts`
+- [x] Fullscreen UX — icon-only SVG expand/compress buttons with `title` tooltip (no text)
+- [x] Add `eslint.config.mjs` + ESLint devDeps to `showcase-hitachi`; `pnpm lint` 5/5 clean
 
-### Phase 3 — GMO Showcase ⏳ Not Started
+### Phase 2 — GMO Showcase ⏳ Not Started
 
 - [ ] Scaffold `apps/showcase-gmo` (Vite + React)
 - [ ] GMO design tokens (deep black + blue)
@@ -189,6 +196,22 @@ shell (Next.js consumer)
 | CI/CD                 | GitHub Actions                                              |
 | Git flow              | Trunk-based (main branch)                                   |
 | Commit format         | `feat(phase-[num]): message`                                |
+
+---
+
+## Lessons Learned
+
+### Phase 2 — Hitachi MF Showcase
+
+| # | Lesson | Fix Applied |
+|---|--------|-------------|
+| 1 | **`@vitejs/plugin-react-swc` breaks MF preamble** — SWC plugin does not inject the React Fast Refresh preamble into Module Federation virtual entry points, causing "can't detect preamble" error at runtime. | Switch to `@vitejs/plugin-react` (Babel). Place `react()` plugin **before** `federation()` in `vite.config.ts` so Babel transforms exposed files first. |
+| 2 | **Preamble flag not on `window` when loading cross-origin MF module** — The shell (Next.js/webpack) loads the remote's component files but `window.__vite_plugin_react_preamble_installed__` was never set by the remote's Vite server on this page. | In `mf-loader.ts`: before loading the container, check if the remote is a Vite dev server (HEAD `/@react-refresh`), then set `window.__vite_plugin_react_preamble_installed__ = true` + no-op stubs synchronously. |
+| 3 | **webpack static bundling breaks cross-origin `import()`** — Using `import(remoteUrl)` directly is intercepted and statically analyzed by webpack, preventing runtime resolution. | Wrap in `new Function('url', 'return import(url)')` to produce a fully dynamic import that webpack cannot statically resolve. |
+| 4 | **Tailwind CSS classes silently ignored in Vite micro-apps** — The Vite micro-app has no Tailwind configured, so `className="px-4 py-3 text-left"` etc. produce zero CSS — components appear with no padding/alignment. | Never use `className` with Tailwind utilities in micro-apps unless Tailwind is explicitly configured. Use 100% inline `style` props for all micro-app components. |
+| 5 | **Data file encoding mojibake** — Special Unicode characters (like `→`) saved in a file with wrong encoding appear as garbled sequences (`â†'`) at runtime. | Use plain ASCII equivalents (`->`) for display text in data files, or ensure file is saved as UTF-8 without BOM. Check file encoding when characters look garbled. |
+| 6 | **Missing `eslint.config.mjs` in new Vite apps** — Turborepo's `pnpm lint` runs ESLint in each workspace package; if the config file is absent, ESLint v9 errors immediately. | Always create `eslint.config.mjs` when scaffolding a new Vite app and add all required ESLint devDependencies to its `package.json`. |
+| 7 | **Fullscreen toggle needs icon UX** — A text link "Open full screen" and "← Back" is verbose and breaks the app chrome. | Use SVG icon-only buttons (expand/compress icons) with `title` tooltip. No text needed. |
 
 ---
 
