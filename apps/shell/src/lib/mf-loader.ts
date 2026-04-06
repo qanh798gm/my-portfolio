@@ -115,7 +115,6 @@ async function loadContainer(remoteUrl: string): Promise<MFContainer> {
   // Install preamble BEFORE importing the remote so the per-module guard passes
   await installReactRefreshPreamble(remoteOrigin)
 
-  // eslint-disable-next-line @typescript-eslint/no-implied-eval
   const container = await new Function(
     'url',
     'return import(url)',
