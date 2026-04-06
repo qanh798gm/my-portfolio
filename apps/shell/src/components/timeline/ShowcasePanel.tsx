@@ -1,12 +1,20 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { CareerEntry } from '@/lib/career-data'
+import { loadHitachiModule } from '@/lib/mf-loader'
 
 interface ShowcasePanelProps {
   entry: CareerEntry
 }
+
+// ─── IDs of companies that have a live MF-powered demo ─────────────────────────
+const LIVE_MF_APPS = new Set(['hitachi'])
+
+// ─── Main component ────────────────────────────────────────────────────────────
 
 export function ShowcasePanel({ entry }: ShowcasePanelProps) {
   return (
@@ -88,13 +96,126 @@ export function ShowcasePanel({ entry }: ShowcasePanelProps) {
         </div>
 
         {/* Demo area */}
-        <DemoPlaceholder entry={entry} />
+        {LIVE_MF_APPS.has(entry.id) ? (
+          <MFDemoArea entry={entry} />
+        ) : (
+          <DemoPlaceholder entry={entry} />
+        )}
       </div>
     </motion.div>
   )
 }
 
-// ─── Demo placeholder ─────────────────────────────────────────────────────────
+// ─── MF Demo Area (runtime import via useEffect) ───────────────────────────────
+
+/**
+ * Loads a Module Federation remote component at runtime using useEffect,
+ * which bypasses webpack's static module graph entirely.
+ * The import string is constructed at runtime to prevent any build-time resolution.
+ */
+function MFDemoArea({ entry }: { entry: CareerEntry }) {
+  const [AppComponent, setAppComponent] = useState<React.ComponentType | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const loaded = useRef(false)
+
+  useEffect(() => {
+    if (loaded.current) return
+    loaded.current = true
+
+    // Load via dynamic ES module import of remoteEntry.js (Vite MF pattern)
+    loadHitachiModule<{ HitachiApp: React.ComponentType }>('./HitachiApp')
+      .then((mod: { HitachiApp: React.ComponentType }) => {
+        if (mod?.HitachiApp) {
+          setAppComponent(() => mod.HitachiApp)
+        }
+      })
+      .catch((err: unknown) => {
+        console.error('[MF] Failed to load HitachiApp:', err)
+        setError('Demo failed to load. Make sure the showcase-hitachi server is running on port 5001.')
+      })
+  }, [entry.id])
+
+  if (error) {
+    return (
+      <div
+        className="flex min-h-64 flex-col items-center justify-center rounded-xl border border-dashed"
+        style={{ borderColor: `${entry.accentColor}44` }}
+      >
+        <p className="text-sm text-red-400">⚠ {error}</p>
+      </div>
+    )
+  }
+
+  if (!AppComponent) {
+    return <AppLoadingFallback accentColor={entry.accentColor} label={entry.shortName} />
+  }
+
+  return (
+    <div
+      className="overflow-hidden rounded-xl border"
+      style={{ borderColor: `${entry.accentColor}44`, minHeight: 600 }}
+    >
+      {/* Label bar */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: `1px solid ${entry.accentColor}33`,
+          backgroundColor: `${entry.accentColor}12`,
+          padding: '6px 12px',
+        }}
+      >
+        <span style={{ fontSize: 12, fontWeight: 500, color: entry.accentColor }}>
+          🖥️ Live Demo — {entry.shortName} Logistics Dashboard
+        </span>
+        <Link
+          href={entry.showcaseRoute}
+          title="Toggle full screen"
+          aria-label="Open full screen"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 28,
+            height: 28,
+            borderRadius: 6,
+            border: `1px solid ${entry.accentColor}44`,
+            backgroundColor: `${entry.accentColor}18`,
+            color: entry.accentColor,
+            textDecoration: 'none',
+            transition: 'background-color 0.15s, border-color 0.15s',
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget
+            el.style.backgroundColor = `${entry.accentColor}33`
+            el.style.borderColor = `${entry.accentColor}88`
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget
+            el.style.backgroundColor = `${entry.accentColor}18`
+            el.style.borderColor = `${entry.accentColor}44`
+          }}
+        >
+          {/* Expand / enter-fullscreen icon */}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+            <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+            <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+          </svg>
+        </Link>
+      </div>
+
+      {/* Federated micro-app */}
+      <div style={{ height: 580 }}>
+        <AppComponent />
+      </div>
+    </div>
+  )
+}
+
+// ─── Fallback placeholder (coming soon) ────────────────────────────────────────
 
 function DemoPlaceholder({ entry }: { entry: CareerEntry }) {
   return (
@@ -128,6 +249,38 @@ function DemoPlaceholder({ entry }: { entry: CareerEntry }) {
       <p className="mt-1 text-xs text-[var(--color-text-muted)]">
         Interactive showcase in development
       </p>
+    </div>
+  )
+}
+
+function AppLoadingFallback({ accentColor, label }: { accentColor: string; label: string }) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: 600,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#0d1117',
+        borderRadius: 12,
+        border: `1px solid ${accentColor}33`,
+      }}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            border: `3px solid #21262d`,
+            borderTopColor: accentColor,
+            borderRadius: '50%',
+            animation: 'mf-spin 0.7s linear infinite',
+            margin: '0 auto 10px',
+          }}
+        />
+        <style>{`@keyframes mf-spin { to { transform: rotate(360deg); } }`}</style>
+        <p style={{ color: '#484f58', fontSize: 12 }}>Loading {label} demo…</p>
+      </div>
     </div>
   )
 }
