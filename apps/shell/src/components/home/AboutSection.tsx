@@ -5,11 +5,26 @@ import { motion } from 'framer-motion'
 const skillGroups = [
   {
     category: 'Frontend',
-    skills: ['React', 'TypeScript', 'Vue 3', 'Angular', 'Next.js', 'Vite', 'Tailwind CSS', 'Framer Motion'],
+    skills: [
+      'React',
+      'TypeScript',
+      'Vue 3',
+      'Angular',
+      'Next.js',
+      'Vite',
+      'Tailwind CSS',
+      'Framer Motion',
+    ],
   },
   {
     category: 'Architecture',
-    skills: ['Micro-frontends', 'Module Federation', 'single-spa', 'Monorepo (Turborepo)', 'Design Systems'],
+    skills: [
+      'Micro-frontends',
+      'Module Federation',
+      'single-spa',
+      'Monorepo (Turborepo)',
+      'Design Systems',
+    ],
   },
   {
     category: 'Real-time & Data',
@@ -41,9 +56,7 @@ export function AboutSection() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="mb-3 text-3xl font-bold text-[var(--color-text-primary)]">About</h2>
-          <p className="text-sm text-[var(--color-text-secondary)]">
-            The engineer behind the code
-          </p>
+          <p className="text-sm text-[var(--color-text-secondary)]">The engineer behind the code</p>
         </motion.div>
 
         <div className="grid gap-10 lg:grid-cols-2">
@@ -55,19 +68,19 @@ export function AboutSection() {
             transition={{ duration: 0.5 }}
           >
             <h3 className="mb-4 text-lg font-semibold text-[var(--color-text-primary)]">
-              Hi, I&apos;m Anh
+              Hi, I&apos;m Anh (Đỗ Quốc Anh)
             </h3>
             <div className="space-y-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
               <p>
-                Frontend engineer based in Ho Chi Minh City with 6 years of experience building
+                Frontend engineer based in Ho Chi Minh City with 7 years of experience building
                 production-grade interfaces for trading platforms, enterprise ERPs, and data-heavy
                 dashboards.
               </p>
               <p>
                 I care about code that scales — architectures that teams can understand and extend,
                 UIs that stay fast under real data, and systems that don&apos;t become a maintenance
-                nightmare. I&apos;ve worked across fintech, consulting, logistics, and crypto, always
-                embedded in product teams rather than isolated delivery.
+                nightmare. I&apos;ve worked across fintech, consulting, logistics, and crypto,
+                always embedded in product teams rather than isolated delivery.
               </p>
               <p>
                 Outside of work I&apos;m building Bliff, an AI interview coach for developers, and
@@ -78,7 +91,9 @@ export function AboutSection() {
             {/* Certification */}
             <div className="mt-6">
               <div className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] px-3 py-2">
-                <span className="text-lg" aria-hidden="true">🏅</span>
+                <span className="text-lg" aria-hidden="true">
+                  🏅
+                </span>
                 <div>
                   <p className="text-xs font-medium text-[var(--color-text-primary)]">
                     Microsoft Certified
@@ -101,7 +116,7 @@ export function AboutSection() {
           >
             {skillGroups.map((group) => (
               <div key={group.category}>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
+                <p className="mb-2 text-xs font-semibold tracking-wider text-[var(--color-text-muted)] uppercase">
                   {group.category}
                 </p>
                 <div className="flex flex-wrap gap-1.5">

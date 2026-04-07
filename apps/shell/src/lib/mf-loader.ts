@@ -115,15 +115,12 @@ async function loadContainer(remoteUrl: string): Promise<MFContainer> {
   // Install preamble BEFORE importing the remote so the per-module guard passes
   await installReactRefreshPreamble(remoteOrigin)
 
-  const container = await new Function(
-    'url',
-    'return import(url)',
-  )(remoteUrl) as MFContainer
+  const container = (await new Function('url', 'return import(url)')(remoteUrl)) as MFContainer
 
   if (typeof container.init !== 'function' || typeof container.get !== 'function') {
     throw new Error(
       `[MF] ${remoteUrl} does not export { init, get }. ` +
-        `Check the @module-federation/vite config.`,
+        `Check the @module-federation/vite config.`
     )
   }
 

@@ -1,6 +1,6 @@
 # My Portfolio App — Master Plan
 
-> **Purpose:** An all-in-one interactive portfolio app that showcases 6 years of frontend engineering experience through live demos, simulated UIs, and real tech implementations — targeting HR managers and hiring teams.
+> **Purpose:** An all-in-one interactive portfolio app that showcases 7 years of frontend engineering experience through live demos, simulated UIs, and real tech implementations — targeting HR managers and hiring teams.
 
 ---
 

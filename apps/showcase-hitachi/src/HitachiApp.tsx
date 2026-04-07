@@ -32,7 +32,15 @@ export function HitachiApp() {
         <HitachiSidebar />
 
         {/* Main content area */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0, overflow: 'hidden' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            minWidth: 0,
+            overflow: 'hidden',
+          }}
+        >
           {/* Top bar */}
           <HitachiTopBar />
 

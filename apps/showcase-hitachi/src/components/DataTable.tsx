@@ -91,7 +91,8 @@ export function DataTable<T = any>({
                   }}
                   onMouseLeave={(e) => {
                     if (!isSelected) {
-                      ;(e.currentTarget as HTMLTableRowElement).style.backgroundColor = 'transparent'
+                      ;(e.currentTarget as HTMLTableRowElement).style.backgroundColor =
+                        'transparent'
                     }
                   }}
                 >

@@ -7,8 +7,7 @@ interface KpiCardProps {
 }
 
 export function KpiCard({ label, value, delta, trend, icon }: KpiCardProps) {
-  const trendColor =
-    trend === 'up' ? '#3fb950' : trend === 'down' ? '#f85149' : '#8d96a0'
+  const trendColor = trend === 'up' ? '#3fb950' : trend === 'down' ? '#f85149' : '#8d96a0'
   const trendArrow = trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→'
 
   return (
@@ -20,7 +19,14 @@ export function KpiCard({ label, value, delta, trend, icon }: KpiCardProps) {
         backgroundColor: '#1c2128',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: 12,
+        }}
+      >
         <span
           style={{
             fontSize: 11,

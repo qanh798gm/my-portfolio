@@ -33,6 +33,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/**', 'dist/**'],
+    ignores: ['node_modules/**', 'dist/**', 'src/test-setup.ts'],
   },
 ]

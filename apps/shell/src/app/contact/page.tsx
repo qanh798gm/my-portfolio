@@ -7,7 +7,11 @@ export const metadata: Metadata = {
 
 const contacts = [
   { label: 'Email', value: 'q.anh798gm@gmail.com', href: 'mailto:q.anh798gm@gmail.com' },
-  { label: 'LinkedIn', value: 'linkedin.com/in/anh798gm', href: 'https://www.linkedin.com/in/anh798gm/' },
+  {
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/anh798gm',
+    href: 'https://www.linkedin.com/in/anh798gm/',
+  },
   { label: 'GitHub', value: 'github.com/qanh798gm', href: 'https://github.com/qanh798gm' },
   { label: 'Phone', value: '+84 0339 336 088', href: 'tel:+840339336088' },
 ]
@@ -17,7 +21,7 @@ export default function ContactPage() {
     <div className="mx-auto max-w-2xl px-6 py-20">
       <h1 className="mb-4 text-4xl font-bold text-[var(--color-text-primary)]">Contact</h1>
       <p className="mb-12 text-[var(--color-text-secondary)]">
-        Open to new opportunities. Feel free to reach out via any channel below.
+        Feel free to reach out via any channel below.
       </p>
 
       <div className="mb-10 space-y-4">

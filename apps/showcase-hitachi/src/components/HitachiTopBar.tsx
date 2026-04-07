@@ -28,12 +28,8 @@ export function HitachiTopBar() {
     >
       {/* Page title */}
       <div>
-        <h1 style={{ fontSize: 14, fontWeight: 600, color: '#e6edf3', margin: 0 }}>
-          {page.title}
-        </h1>
-        <p style={{ fontSize: 12, color: '#484f58', margin: 0 }}>
-          {page.subtitle}
-        </p>
+        <h1 style={{ fontSize: 14, fontWeight: 600, color: '#e6edf3', margin: 0 }}>{page.title}</h1>
+        <p style={{ fontSize: 12, color: '#484f58', margin: 0 }}>{page.subtitle}</p>
       </div>
 
       {/* Right actions */}

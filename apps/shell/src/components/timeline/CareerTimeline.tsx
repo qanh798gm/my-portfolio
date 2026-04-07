@@ -26,7 +26,7 @@ export function CareerTimeline() {
             Career Timeline
           </h2>
           <p className="text-sm text-[var(--color-text-secondary)]">
-            6 years across fintech, ERP, crypto, and enterprise logistics
+            7 years across fintech, ERP, crypto, and enterprise logistics
           </p>
         </motion.div>
 
@@ -40,7 +40,7 @@ export function CareerTimeline() {
         >
           {/* Connecting line */}
           <div
-            className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2"
+            className="absolute top-1/2 right-0 left-0 h-px -translate-y-1/2"
             style={{ backgroundColor: 'var(--color-bg-border)' }}
             aria-hidden="true"
           />

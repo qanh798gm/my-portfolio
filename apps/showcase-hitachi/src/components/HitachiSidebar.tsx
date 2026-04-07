@@ -50,17 +50,19 @@ export function HitachiSidebar() {
           H
         </div>
         <div>
-          <p style={{ color: '#e6edf3', fontSize: 12, fontWeight: 700, lineHeight: 1.2, margin: 0 }}>
+          <p
+            style={{ color: '#e6edf3', fontSize: 12, fontWeight: 700, lineHeight: 1.2, margin: 0 }}
+          >
             Hitachi
           </p>
-          <p style={{ color: '#484f58', fontSize: 11, lineHeight: 1.2, margin: 0 }}>
-            LogiTrack
-          </p>
+          <p style={{ color: '#484f58', fontSize: 11, lineHeight: 1.2, margin: 0 }}>LogiTrack</p>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav style={{ flex: 1, padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <nav
+        style={{ flex: 1, padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}
+      >
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.to}
@@ -81,7 +83,9 @@ export function HitachiSidebar() {
               borderLeft: isActive ? '2px solid #e8000d' : '2px solid transparent',
             })}
           >
-            <span style={{ fontSize: 15, lineHeight: 1 }} aria-hidden="true">{item.icon}</span>
+            <span style={{ fontSize: 15, lineHeight: 1 }} aria-hidden="true">
+              {item.icon}
+            </span>
             {item.label}
           </NavLink>
         ))}
