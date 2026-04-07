@@ -40,7 +40,7 @@ export function CareerTimeline() {
         >
           {/* Connecting line */}
           <div
-            className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2"
+            className="absolute top-1/2 right-0 left-0 h-px -translate-y-1/2"
             style={{ backgroundColor: 'var(--color-bg-border)' }}
             aria-hidden="true"
           />

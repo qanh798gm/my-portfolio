@@ -35,7 +35,18 @@ export function CargoPage() {
             const count = cargoItems.filter((c) => c.status === s).length
             const color = STATUS_COLORS[s]
             return (
-              <span key={s} style={{ borderRadius: 20, padding: '2px 10px', fontSize: 12, fontWeight: 500, backgroundColor: `${color}18`, color, border: `1px solid ${color}33` }}>
+              <span
+                key={s}
+                style={{
+                  borderRadius: 20,
+                  padding: '2px 10px',
+                  fontSize: 12,
+                  fontWeight: 500,
+                  backgroundColor: `${color}18`,
+                  color,
+                  border: `1px solid ${color}33`,
+                }}
+              >
                 {count} {s}
               </span>
             )

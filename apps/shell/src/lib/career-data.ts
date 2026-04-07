@@ -89,7 +89,15 @@ export const careerData: CareerEntry[] = [
     logo: '/assets/logos/aquariux.svg',
     showcaseRoute: '/showcase/aquariux',
     isCurrentRole: true,
-    tags: ['React', 'TypeScript', 'React Native', 'WebSocket', 'White-label', 'Multi-tenant', 'styled-components'],
+    tags: [
+      'React',
+      'TypeScript',
+      'React Native',
+      'WebSocket',
+      'White-label',
+      'Multi-tenant',
+      'styled-components',
+    ],
     highlights: [
       'Multi-asset white-label trading platform for ~20 enterprise fintech clients across SEA & Middle East',
       'Single-codebase multi-tenant frontend — client-specific customization, low operational cost',

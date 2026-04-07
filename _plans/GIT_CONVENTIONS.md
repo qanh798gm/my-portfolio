@@ -38,15 +38,15 @@ docs: update PROGRESS.md after phase 1 completion
 
 ### Commit Type Prefixes
 
-| Prefix              | When to use                                  |
-| ------------------- | -------------------------------------------- |
-| `feat(phase-N)`     | New feature or component in a specific phase |
-| `fix(phase-N)`      | Bug fix scoped to a phase                    |
+| Prefix              | When to use                                                                           |
+| ------------------- | ------------------------------------------------------------------------------------- |
+| `feat(phase-N)`     | New feature or component in a specific phase                                          |
+| `fix(phase-N)`      | Bug fix scoped to a phase                                                             |
 | `chore`             | Tooling, config, meta files (no phase needed — e.g. `chore: add obsidian vault plan`) |
-| `docs`              | Updates to markdown files, comments          |
-| `refactor(phase-N)` | Code restructure without behavior change     |
-| `style`             | Formatting, lint fixes only                  |
-| `test`              | Adding or updating tests                     |
+| `docs`              | Updates to markdown files, comments                                                   |
+| `refactor(phase-N)` | Code restructure without behavior change                                              |
+| `style`             | Formatting, lint fixes only                                                           |
+| `test`              | Adding or updating tests                                                              |
 
 ---
 

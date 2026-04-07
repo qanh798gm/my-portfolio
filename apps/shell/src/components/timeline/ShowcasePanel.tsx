@@ -22,7 +22,7 @@ export function ShowcasePanel({ entry }: ShowcasePanelProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
-      transition={{ duration: 0.35, ease: 'easeInOut' }}
+      transition={{ duration: 0.35, ease: 'easeInOut' as const }}
       className="overflow-hidden rounded-2xl border bg-[var(--color-bg-surface)]"
       style={{ borderColor: `${entry.accentColor}44` }}
     >
@@ -131,7 +131,9 @@ function MFDemoArea({ entry }: { entry: CareerEntry }) {
       })
       .catch((err: unknown) => {
         console.error('[MF] Failed to load HitachiApp:', err)
-        setError('Demo failed to load. Make sure the showcase-hitachi server is running on port 5001.')
+        setError(
+          'Demo failed to load. Make sure the showcase-hitachi server is running on port 5001.'
+        )
       })
   }, [entry.id])
 
@@ -198,7 +200,17 @@ function MFDemoArea({ entry }: { entry: CareerEntry }) {
           }}
         >
           {/* Expand / enter-fullscreen icon */}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <path d="M8 3H5a2 2 0 0 0-2 2v3" />
             <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
             <path d="M3 16v3a2 2 0 0 0 2 2h3" />
