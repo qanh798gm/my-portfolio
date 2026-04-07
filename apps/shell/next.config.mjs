@@ -8,6 +8,11 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['@portfolio/ui'],
   },
+  // Next.js 16 defaults to Turbopack. We still need webpack for Module Federation
+  // (no Turbopack equivalent yet). Adding an empty turbopack config silences the
+  // "webpack config present but no turbopack config" error — the build still uses
+  // webpack when a webpack() function is defined.
+  turbopack: {},
   webpack(config, { isServer }) {
     if (!isServer) {
       // Register MF remotes so runtime can fetch them

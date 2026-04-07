@@ -107,7 +107,10 @@
 - [x] Upgrade Turbo 2.3 → 2.9, Prettier 3.4 → 3.8, `prettier-plugin-tailwindcss` 0.6 → 0.7 ✅
 - [x] Fix: exclude `src/test-setup.ts` from `packages/ui` tsconfig + eslint (not part of library types) ✅
 - [x] Fix: `packages/ui` peerDependencies updated to `^18.3.1 || ^19.0.0` ✅
-- [x] All packages typecheck ✓, lint ✓ after upgrades
+- [x] All packages typecheck ✓, lint ✓, build ✓ after upgrades
+- [x] Fix: Next.js 16 defaults to Turbopack — added `turbopack: {}` to `next.config.mjs` to silence "webpack config present but no turbopack config" error (MF still uses webpack; no Turbopack equivalent for Module Federation yet)
+- [x] Remove "Open to new opportunities" from `HeroSection.tsx` and `contact/page.tsx`
+- [x] Add Vietnamese full name line in `HeroSection.tsx` below `<AnhDo />`
 
 ### Phase 2 — GMO Showcase ⏳ Not Started
 

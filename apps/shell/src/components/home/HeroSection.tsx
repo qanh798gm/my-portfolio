@@ -33,21 +33,10 @@ export function HeroSection() {
         initial="hidden"
         animate="visible"
       >
-        {/* Availability badge */}
-        <motion.div variants={itemVariants}>
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-bg-border)] bg-[var(--color-bg-surface)] px-3 py-1 text-xs text-[var(--color-text-secondary)]">
-            <span
-              className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"
-              aria-hidden="true"
-            />
-            Open to new opportunities
-          </span>
-        </motion.div>
-
         {/* Brand name */}
         <motion.h1
           variants={itemVariants}
-          className="mb-4 font-mono text-5xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-6xl"
+          className="mb-2 font-mono text-5xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-6xl"
         >
           {'<AnhDo />'}
         </motion.h1>
@@ -70,7 +59,7 @@ export function HeroSection() {
           variants={itemVariants}
           className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)]"
         >
-          6 years building trading platforms, ERP ecosystems, and enterprise dashboards across
+          7 years building trading platforms, ERP ecosystems, and enterprise dashboards across
           fintech, logistics, and consulting — specialising in React, TypeScript, and micro-frontend
           architecture.
         </motion.p>

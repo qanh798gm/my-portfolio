@@ -21,7 +21,7 @@ export default function ContactPage() {
     <div className="mx-auto max-w-2xl px-6 py-20">
       <h1 className="mb-4 text-4xl font-bold text-[var(--color-text-primary)]">Contact</h1>
       <p className="mb-12 text-[var(--color-text-secondary)]">
-        Open to new opportunities. Feel free to reach out via any channel below.
+        Feel free to reach out via any channel below.
       </p>
 
       <div className="mb-10 space-y-4">

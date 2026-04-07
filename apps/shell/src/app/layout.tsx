@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s | Anh Quoc Do',
   },
   description:
-    'Frontend Engineer with 6 years of experience building trading platforms, ERP systems, and enterprise dashboards. React, TypeScript, micro-frontends.',
+    'Frontend Engineer with 7 years of experience building trading platforms, ERP systems, and enterprise dashboards. React, TypeScript, micro-frontends.',
   keywords: [
     'Frontend Engineer',
     'React',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     title: 'Anh Quoc Do — Frontend Engineer',
     description:
-      'Frontend Engineer with 6 years of experience building trading platforms, ERP systems, and enterprise dashboards.',
+      'Frontend Engineer with 7 years of experience building trading platforms, ERP systems, and enterprise dashboards.',
     siteName: 'Anh Quoc Do Portfolio',
   },
   twitter: {

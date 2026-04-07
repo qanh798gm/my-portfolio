@@ -68,11 +68,11 @@ export function AboutSection() {
             transition={{ duration: 0.5 }}
           >
             <h3 className="mb-4 text-lg font-semibold text-[var(--color-text-primary)]">
-              Hi, I&apos;m Anh
+              Hi, I&apos;m Anh (Đỗ Quốc Anh)
             </h3>
             <div className="space-y-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
               <p>
-                Frontend engineer based in Ho Chi Minh City with 6 years of experience building
+                Frontend engineer based in Ho Chi Minh City with 7 years of experience building
                 production-grade interfaces for trading platforms, enterprise ERPs, and data-heavy
                 dashboards.
               </p>

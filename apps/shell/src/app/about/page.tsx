@@ -52,7 +52,7 @@ export default function AboutPage() {
     <div className="mx-auto max-w-4xl px-6 py-20">
       <h1 className="mb-4 text-4xl font-bold text-[var(--color-text-primary)]">About</h1>
       <p className="mb-16 text-[var(--color-text-secondary)]">
-        Frontend Engineer with 6 years of experience specialising in complex, data-intensive
+        Frontend Engineer with 7 years of experience specialising in complex, data-intensive
         applications — trading platforms, ERP ecosystems, and enterprise dashboards.
       </p>
 

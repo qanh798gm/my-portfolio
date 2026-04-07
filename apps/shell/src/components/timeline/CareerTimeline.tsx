@@ -26,7 +26,7 @@ export function CareerTimeline() {
             Career Timeline
           </h2>
           <p className="text-sm text-[var(--color-text-secondary)]">
-            6 years across fintech, ERP, crypto, and enterprise logistics
+            7 years across fintech, ERP, crypto, and enterprise logistics
           </p>
         </motion.div>
 
