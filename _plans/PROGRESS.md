@@ -6,12 +6,12 @@
 
 ## Quick Status
 
-| Item          | Status                                      |
-| ------------- | ------------------------------------------- |
-| Overall Phase | Phase 1.5 — Dependency Upgrades ✅ Complete |
-| Last Updated  | 2026-04-07                                  |
-| Live URL      | Not deployed yet                            |
-| GitHub Repo   | https://github.com/qanh798gm                |
+| Item | Status |
+| ------------- | ------------------------------------------------- |
+| Overall Phase | Phase 1.5 — Dep Upgrades + Deployment 🚧 In Progress |
+| Last Updated | 2026-04-15 |
+| Live URL | Not deployed yet |
+| GitHub Repo | https://github.com/qanh798gm |
 
 ---
 
@@ -49,7 +49,6 @@
 - [x] Shell: `--turbopack` flag added to dev script
 - [x] Shell: `src/types/css.d.ts` added — resolves TS side-effect import warning for CSS files
 - [x] Shell builds successfully (`next build` ✓), typecheck ✓, lint ✓
-- [ ] Deploy shell to Vercel
 
 ### Phase 1b — Hitachi MF Showcase ✅ Complete
 
@@ -89,9 +88,9 @@
 - [x] Fullscreen UX — icon-only SVG expand/compress buttons with `title` tooltip (no text)
 - [x] Add `eslint.config.mjs` + ESLint devDeps to `showcase-hitachi`; `pnpm lint` 5/5 clean
 
-### Phase 1.5 — Dependency Upgrades ✅ Complete
+### Phase 1.5 — Dependency Upgrades + Vercel Deployment 🚧 In Progress
 
-> **Goal:** Bring all critical dependencies to latest stable before continuing with new showcases.
+> **Goal:** Bring all critical dependencies to latest stable + deploy to Vercel before continuing with new showcases.
 > Branch: `chore/phase-1.5-dep-upgrades`
 
 - [x] Upgrade Next.js 15 → 16 (shell) — React 19 compatible, Node >=20.9 required ✅
@@ -111,6 +110,14 @@
 - [x] Fix: Next.js 16 defaults to Turbopack — added `turbopack: {}` to `next.config.mjs` to silence "webpack config present but no turbopack config" error (MF still uses webpack; no Turbopack equivalent for Module Federation yet)
 - [x] Remove "Open to new opportunities" from `HeroSection.tsx` and `contact/page.tsx`
 - [x] Add Vietnamese full name line in `HeroSection.tsx` below `<AnhDo />`
+- [x] Add `vercel.json` for shell (Next.js framework, `pnpm build`, Singapore region)
+- [x] Add `vercel.json` for showcase-hitachi (static `dist/`, CORS headers, SPA rewrite)
+- [x] Update `mf-loader.ts` — smart URL resolution: `NEXT_PUBLIC_HITACHI_REMOTE_URL` → `VERCEL_URL` → `localhost:5001`
+- [x] Update `next.config.mjs` — MF remote URL falls back to `VERCEL_URL` when deployed
+- [x] Add `.env.example` for shell documenting `NEXT_PUBLIC_HITACHI_REMOTE_URL`
+- [ ] Deploy showcase-hitachi to Vercel (serves `remoteEntry.js` + assets with CORS)
+- [ ] Deploy shell to Vercel (set `NEXT_PUBLIC_HITACHI_REMOTE_URL` env var to showcase-hitachi URL)
+- [ ] Verify shell loads HitachiApp via MF at runtime on production
 
 ### Phase 2 — GMO Showcase ⏳ Not Started
 
@@ -216,8 +223,13 @@ shell (Next.js consumer)
 | State          | Zustand per micro-app + React Query (Phase 2+)                                                          |
 | Testing        | Vitest **4** + React Testing Library                                                                    |
 | ESLint         | ESLint **9.39.x** flat config, `typescript-eslint` **8.58**, stayed on v9 (react plugins not v10-ready) |
-| Deployment     | Vercel free subdomain                                                                                   |
-| CI/CD          | GitHub Actions                                                                                          |
+| Deployment | Vercel — 2 separate projects (shell + showcase-hitachi) |
+| CI/CD | Vercel auto-deploy from GitHub |
+| Deployment Strategy | showcase-hitachi deployed FIRST → shell deployed SECOND |
+| MF Remote URL | VERCEL_URL system env (auto-set on Vercel); NEXT_PUBLIC_HITACHI_REMOTE_URL override |
+| CORS | showcase-hitachi serves remoteEntry.js + all assets with `Access-Control-Allow-Origin: *` |
+| SPA Routing | showcase-hitachi vercel.json rewrites all routes to index.html (react-router-dom) |
+| Local Dev | HITACHI_REMOTE_URL defaults to http://localhost:5001 (no env vars needed) |
 | Git flow       | Trunk-based (main branch)                                                                               |
 | Commit format  | `feat(phase-[num]): message`                                                                            |
 
