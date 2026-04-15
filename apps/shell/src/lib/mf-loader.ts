@@ -144,8 +144,9 @@ function resolveHitachiRemoteUrl(): string {
   }
 
   // Explicit override takes precedence in all environments
+  // Strip trailing slash to prevent double-slash in URL construction
   if (process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL) {
-    return process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL
+    return process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL.replace(/\/+$/, '')
   }
 
   // On Vercel (production or preview) VERCEL_URL is set automatically.

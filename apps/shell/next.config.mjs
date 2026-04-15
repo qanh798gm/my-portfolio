@@ -22,8 +22,7 @@ const nextConfig = {
           filename: 'static/chunks/remoteEntry.js',
           remotes: {
             showcase_hitachi: `showcase_hitachi@${
-            process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL ??
-            (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:5001')
+            (process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL ?? 'http://localhost:5001').replace(/\/+$/, '')
             }/remoteEntry.js`,
           },
           exposes: {},
