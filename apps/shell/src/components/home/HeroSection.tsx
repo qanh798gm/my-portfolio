@@ -60,7 +60,7 @@ export function HeroSection() {
           className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)]"
         >
           7 years building trading platforms, ERP ecosystems, and enterprise dashboards across
-          fintech, logistics, and consulting — specialising in React, TypeScript, and micro-frontend
+          fintech, logistics, and consulting — specialising in React, Vue, TypeScript, and micro-frontend
           architecture.
         </motion.p>
 
@@ -74,13 +74,6 @@ export function HeroSection() {
             className="rounded-lg bg-[var(--color-brand-primary)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--color-brand-primary-hover)]"
           >
             View Career Timeline
-          </a>
-          <a
-            href="/assets/cv-anh-quoc-do.pdf"
-            download
-            className="rounded-lg border border-[var(--color-bg-border)] px-5 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-brand-primary)] hover:text-[var(--color-text-primary)]"
-          >
-            Download CV
           </a>
         </motion.div>
       </motion.div>

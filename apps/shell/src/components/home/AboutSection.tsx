@@ -7,13 +7,12 @@ const skillGroups = [
     category: 'Frontend',
     skills: [
       'React',
-      'TypeScript',
-      'Vue 3',
+      'Vue',
       'Angular',
+      'TypeScript',
       'Next.js',
       'Vite',
       'Tailwind CSS',
-      'Framer Motion',
     ],
   },
   {
@@ -40,7 +39,7 @@ const skillGroups = [
   },
   {
     category: 'Testing',
-    skills: ['Vitest', 'React Testing Library', 'Jest', 'Storybook'],
+    skills: ['Vitest', 'Jest', 'Storybook'],
   },
 ]
 

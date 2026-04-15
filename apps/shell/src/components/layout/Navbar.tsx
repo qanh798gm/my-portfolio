@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { CvPreviewDialog } from './CvPreviewDialog'
 
 const navLinks = [
   { href: '#timeline', label: 'Timeline' },
@@ -36,13 +37,16 @@ export function Navbar() {
         </ul>
 
         {/* CTA */}
-        <a
-          href="/assets/cv-anh-quoc-do.pdf"
-          download
-          className="rounded-md border border-[var(--color-brand-primary)] px-3 py-1.5 text-xs font-medium text-[var(--color-brand-primary)] transition-colors hover:bg-[var(--color-brand-primary)] hover:text-white"
-        >
-          Download CV
-        </a>
+        <CvPreviewDialog
+          trigger={(open) => (
+            <button
+              onClick={open}
+              className="cursor-pointer rounded-md border border-[var(--color-brand-primary)] px-3 py-1.5 text-xs font-medium text-[var(--color-brand-primary)] transition-colors hover:bg-[var(--color-brand-primary)] hover:text-white"
+            >
+              Preview my CV
+            </button>
+          )}
+        />
       </nav>
     </header>
   )

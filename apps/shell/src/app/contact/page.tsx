@@ -40,14 +40,6 @@ export default function ContactPage() {
           </a>
         ))}
       </div>
-
-      <a
-        href="/assets/cv-anh-quoc-do.pdf"
-        download
-        className="inline-flex w-full items-center justify-center rounded-lg bg-[var(--color-brand-primary)] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-[var(--color-brand-primary-hover)]"
-      >
-        Download CV (PDF)
-      </a>
     </div>
   )
 }
