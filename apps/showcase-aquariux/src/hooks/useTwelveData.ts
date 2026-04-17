@@ -51,8 +51,6 @@ async function fetchTwelvePrice(symbol: SymbolDefinition, apiKey: string): Promi
 export function useTwelveData() {
   const upsertManyTickers = useTradingStore((s) => s.upsertManyTickers)
   const setTwelveStatus = useTradingStore((s) => s.setTwelveStatus)
-  const priceMap = useTradingStore((s) => s.priceMap)
-
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null
     let unmounted = false
@@ -66,13 +64,14 @@ export function useTwelveData() {
 
       try {
         const tickers: MarketTicker[] = []
+        const currentPriceMap = useTradingStore.getState().priceMap
 
         if (hasApi) {
           // Keep requests small for free tier limits
           const targets = NON_CRYPTO_SYMBOLS.slice(0, 8)
 
           for (const symbol of targets) {
-            const prev = priceMap[symbol.id]?.price
+            const prev = currentPriceMap[symbol.id]?.price
             const fetched = await fetchTwelvePrice(symbol, apiKey)
             if (fetched !== null) {
               const base = prev ?? fetched
@@ -92,7 +91,7 @@ export function useTwelveData() {
         } else {
           // No key configured -> mock fallback for non-crypto assets
           for (const symbol of NON_CRYPTO_SYMBOLS) {
-            tickers.push(generateMockTicker(symbol, priceMap[symbol.id]?.price))
+            tickers.push(generateMockTicker(symbol, currentPriceMap[symbol.id]?.price))
           }
         }
 
@@ -113,5 +112,5 @@ export function useTwelveData() {
       unmounted = true
       if (timer) clearTimeout(timer)
     }
-  }, [priceMap, setTwelveStatus, upsertManyTickers])
+  }, [setTwelveStatus, upsertManyTickers])
 }
