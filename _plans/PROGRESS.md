@@ -127,7 +127,7 @@
 - [x] Dark theme setup (aquariux-dark tokens, inline styles)
 - [x] Data layer: Binance WebSocket (crypto) + Twelve Data REST (stocks/forex/ETFs)
 - [x] Zustand store: selected symbol, price map, watchlist, favourites
-- [ ] Trading page: Watchlist | TradingView Lightweight Chart | Trade Form
+- [x] Trading page: Watchlist | TradingView Lightweight Chart | Trade Form
 - [ ] Portfolio page: Asset distribution donut, PnL cards, positions/orders/history tables
 - [ ] Markets page: 6 category boxes with virtualized lists (@tanstack/react-virtual)
 - [x] Wire into shell (mf-loader, next.config, showcase page)

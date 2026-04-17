@@ -54,3 +54,7 @@ Thumbs.db
 
 # Misc
 .cache
+
+# Module Federation generated diagnostics/temp artifacts
+**/.mf/
+**/.__mf__temp/
