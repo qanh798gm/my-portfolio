@@ -1,19 +1,17 @@
+import { MarketGrid } from '../components/markets/MarketGrid'
 import { colors } from '../utils/theme'
 
 export function MarketsPage() {
   return (
     <div
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         height: '100%',
-        color: colors.textMuted,
-        fontSize: 14,
+        minHeight: 0,
         backgroundColor: colors.bgPrimary,
+        padding: 10,
       }}
     >
-      Markets Page — Coming in Batch 5
+      <MarketGrid />
     </div>
   )
 }
