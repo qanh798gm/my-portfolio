@@ -1,18 +1,18 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { CareerEntry } from '@/lib/career-data'
-import { loadHitachiModule } from '@/lib/mf-loader'
+import { loadHitachiModule, loadAquariuxModule } from '@/lib/mf-loader'
 
 interface ShowcasePanelProps {
   entry: CareerEntry
 }
 
 // ─── IDs of companies that have a live MF-powered demo ─────────────────────────
-const LIVE_MF_APPS = new Set(['hitachi'])
+const LIVE_MF_APPS = new Set(['hitachi', 'aquariux'])
 
 // ─── Main component ────────────────────────────────────────────────────────────
 
@@ -116,26 +116,47 @@ export function ShowcasePanel({ entry }: ShowcasePanelProps) {
 function MFDemoArea({ entry }: { entry: CareerEntry }) {
   const [AppComponent, setAppComponent] = useState<React.ComponentType | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const loaded = useRef(false)
-
   useEffect(() => {
-    if (loaded.current) return
-    loaded.current = true
+    setError(null)
+    setAppComponent(null)
 
-    // Load via dynamic ES module import of remoteEntry.js (Vite MF pattern)
-    loadHitachiModule<{ HitachiApp: React.ComponentType }>('./HitachiApp')
-      .then((mod: { HitachiApp: React.ComponentType }) => {
-        if (mod?.HitachiApp) {
-          setAppComponent(() => mod.HitachiApp)
+    const load = async () => {
+      try {
+        if (entry.id === 'hitachi') {
+          const mod = await loadHitachiModule<{ HitachiApp: React.ComponentType }>('./HitachiApp')
+          if (mod?.HitachiApp) {
+            setAppComponent(() => mod.HitachiApp)
+            return
+          }
         }
-      })
-      .catch((err: unknown) => {
-        console.error('[MF] Failed to load HitachiApp:', err)
-        setError(
-          'Demo failed to load. Make sure the showcase-hitachi server is running on port 5001.'
-        )
-      })
-  }, [entry.id])
+
+        if (entry.id === 'aquariux') {
+          const mod = await loadAquariuxModule<{ AquariuxApp: React.ComponentType }>('./AquariuxApp')
+          if (mod?.AquariuxApp) {
+            setAppComponent(() => mod.AquariuxApp)
+            return
+          }
+        }
+
+        setError(`Demo module is not configured for ${entry.shortName}.`)
+      } catch (err: unknown) {
+        console.error(`[MF] Failed to load ${entry.id} app:`, err)
+        if (entry.id === 'hitachi') {
+          setError('Demo failed to load. Make sure the showcase-hitachi server is running on port 5001.')
+          return
+        }
+
+        if (entry.id === 'aquariux') {
+          setError('Demo failed to load. Make sure the showcase-aquariux server is running on port 5002.')
+          return
+        }
+
+        setError(`Demo failed to load for ${entry.shortName}.`)
+      }
+    }
+
+    load()
+  }, [entry.id, entry.shortName])
 
   if (error) {
     return (
@@ -169,7 +190,12 @@ function MFDemoArea({ entry }: { entry: CareerEntry }) {
         }}
       >
         <span style={{ fontSize: 12, fontWeight: 500, color: entry.accentColor }}>
-          🖥️ Live Demo — {entry.shortName} Logistics Dashboard
+          🖥️ Live Demo — {entry.shortName}{' '}
+          {entry.id === 'hitachi'
+            ? 'Logistics Dashboard'
+            : entry.id === 'aquariux'
+              ? 'Trading Platform'
+              : 'Application'}
         </span>
         <Link
           href={entry.showcaseRoute}

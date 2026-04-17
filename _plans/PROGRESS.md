@@ -9,7 +9,7 @@
 | Item | Status |
 | ------------- | ------------------------------------------------- |
 | Overall Phase | Phase 1.5 — Dep Upgrades + Deployment 🚧 In Progress |
-| Last Updated | 2026-04-15 |
+| Last Updated | 2026-04-18 |
 | Live URL | Not deployed yet |
 | GitHub Repo | https://github.com/qanh798gm |
 
@@ -119,7 +119,7 @@
 - [ ] Deploy shell to Vercel (set `NEXT_PUBLIC_HITACHI_REMOTE_URL` env var to showcase-hitachi URL)
 - [ ] Verify shell loads HitachiApp via MF at runtime on production
 
-### Phase 2 — Aquariux Trading Platform ⏳ Not Started
+### Phase 2 — Aquariux Trading Platform ✅ Complete
 
 > **Branch:** `feat/phase-2-aquariux-showcase` | **Port:** 5002 | **Detail plan:** [`PHASE2_AQUARIUX_PLAN.md`](./PHASE2_AQUARIUX_PLAN.md)
 
@@ -128,10 +128,11 @@
 - [x] Data layer: Binance WebSocket (crypto) + Twelve Data REST (stocks/forex/ETFs)
 - [x] Zustand store: selected symbol, price map, watchlist, favourites
 - [x] Trading page: Watchlist | TradingView Lightweight Chart | Trade Form
-- [ ] Portfolio page: Asset distribution donut, PnL cards, positions/orders/history tables
-- [ ] Markets page: 6 category boxes with virtualized lists (@tanstack/react-virtual)
+- [x] Portfolio page: Asset distribution donut, PnL cards, positions/orders/history tables
+- [x] Markets page: 6 category boxes with virtualized lists (@tanstack/react-virtual)
 - [x] Wire into shell (mf-loader, next.config, showcase page)
 - [x] Build verification + integration testing
+- [x] Timeline panel integration: Aquariux live MF demo now mounts inline (no more "coming soon" placeholder)
 
 ### Phase 3 — GMO Showcase ⏳ Not Started
 
@@ -173,7 +174,7 @@ my-portfolio/                    ← pnpm monorepo + Turborepo
 │   │                               Remotes: showcase_hitachi (5001), showcase_aquariux (5002)
 │   ├── showcase-hitachi/        ← Vite + React MF remote ✅ (port 5001)
 │   │                               Exposes: ./HitachiApp via @module-federation/vite
-│   ├── showcase-aquariux/       ← Vite + React MF remote 🚧 (port 5002, Phase 2)
+│   ├── showcase-aquariux/       ← Vite + React MF remote ✅ (port 5002, Phase 2)
 │   │                               Exposes: ./AquariuxApp — trading platform
 │   ├── showcase-gmo/            ← Vite + React micro-app (planned, Phase 3)
 │   ├── showcase-amaris/         ← Vite + React micro-app (planned, Phase 4)
