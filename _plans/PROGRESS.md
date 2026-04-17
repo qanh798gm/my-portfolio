@@ -119,7 +119,21 @@
 - [ ] Deploy shell to Vercel (set `NEXT_PUBLIC_HITACHI_REMOTE_URL` env var to showcase-hitachi URL)
 - [ ] Verify shell loads HitachiApp via MF at runtime on production
 
-### Phase 2 — GMO Showcase ⏳ Not Started
+### Phase 2 — Aquariux Trading Platform ⏳ Not Started
+
+> **Branch:** `feat/phase-2-aquariux-showcase` | **Port:** 5002 | **Detail plan:** [`PHASE2_AQUARIUX_PLAN.md`](./PHASE2_AQUARIUX_PLAN.md)
+
+- [ ] Scaffold `apps/showcase-aquariux` (Vite + React + MF, port 5002)
+- [ ] Dark theme setup (aquariux-dark tokens, inline styles)
+- [ ] Data layer: Binance WebSocket (crypto) + Twelve Data REST (stocks/forex/ETFs)
+- [ ] Zustand store: selected symbol, price map, watchlist, favourites
+- [ ] Trading page: Watchlist | TradingView Lightweight Chart | Trade Form
+- [ ] Portfolio page: Asset distribution donut, PnL cards, positions/orders/history tables
+- [ ] Markets page: 6 category boxes with virtualized lists (@tanstack/react-virtual)
+- [ ] Wire into shell (mf-loader, next.config, showcase page)
+- [ ] Build verification + integration testing
+
+### Phase 3 — GMO Showcase ⏳ Not Started
 
 - [ ] Scaffold `apps/showcase-gmo` (Vite + React)
 - [ ] GMO design tokens (deep black + blue)
@@ -139,18 +153,7 @@
 - [ ] Template demo: blank template vs filled module
 - [ ] Wire into shell
 
-### Phase 5 — Aquariux Showcase ⏳ Not Started
-
-- [ ] Scaffold `apps/showcase-aquariux` (Vite + React)
-- [ ] 3-variant token system (dark fintech / light professional / branded)
-- [ ] Binance WebSocket integration (live BTC/ETH feeds)
-- [ ] TradingView chart with live Kline WebSocket data
-- [ ] Order panel + positions table
-- [ ] Asset switcher (BTC/USDT, ETH/USDT, EUR/USD)
-- [ ] White-label theme switcher (3 client brand demos)
-- [ ] Wire into shell
-
-### Phase 6 — Polish and Launch ⏳ Not Started
+### Phase 5 — Polish and Launch ⏳ Not Started
 
 - [ ] SEO: meta tags, Open Graph images
 - [ ] README with architecture diagram + live demo link
@@ -167,12 +170,13 @@ my-portfolio/                    ← pnpm monorepo + Turborepo
 ├── apps/
 │   ├── shell/                   ← Next.js 16 App Router (main entry, single-page)
 │   │                               Consumer: @module-federation/enhanced/webpack
-│   │                               Remotes: showcase_hitachi (port 5001)
+│   │                               Remotes: showcase_hitachi (5001), showcase_aquariux (5002)
 │   ├── showcase-hitachi/        ← Vite + React MF remote ✅ (port 5001)
 │   │                               Exposes: ./HitachiApp via @module-federation/vite
-│   ├── showcase-gmo/            ← Vite + React micro-app (planned)
-│   ├── showcase-amaris/         ← Vite + React micro-app (planned)
-│   └── showcase-aquariux/       ← Vite + React micro-app (planned, live WS data)
+│   ├── showcase-aquariux/       ← Vite + React MF remote 🚧 (port 5002, Phase 2)
+│   │                               Exposes: ./AquariuxApp — trading platform
+│   ├── showcase-gmo/            ← Vite + React micro-app (planned, Phase 3)
+│   ├── showcase-amaris/         ← Vite + React micro-app (planned, Phase 4)
 └── packages/
     ├── ui/                      ← @portfolio/ui (shared component lib)
     ├── tokens/                  ← @portfolio/tokens (per-app design tokens)
@@ -218,9 +222,9 @@ shell (Next.js consumer)
 | Monorepo       | pnpm workspaces + Turborepo **2.9**                                                                     |
 | UI Library     | `@portfolio/ui`, atomic design, Storybook **10**                                                        |
 | Design Tokens  | CSS custom properties, per-app themes (`@portfolio/tokens`)                                             |
-| Charts         | Recharts **v3** (bar/line/pie) — Hitachi dashboard ✅; TradingView Lightweight Charts (Phase 3+)        |
-| Real-time data | Binance public WebSocket (Phase 5)                                                                      |
-| State          | Zustand per micro-app + React Query (Phase 2+)                                                          |
+| Charts         | Recharts **v3** (bar/line/pie) — Hitachi ✅; TradingView Lightweight Charts — Aquariux (Phase 2)        |
+| Real-time data | Binance WebSocket (crypto) + Twelve Data REST (stocks/forex/ETFs) — Phase 2                             |
+| State          | Zustand per micro-app (Phase 2+)                                                                        |
 | Testing        | Vitest **4** + React Testing Library                                                                    |
 | ESLint         | ESLint **9.39.x** flat config, `typescript-eslint` **8.58**, stayed on v9 (react plugins not v10-ready) |
 | Deployment | Vercel — 2 separate projects (shell + showcase-hitachi) |

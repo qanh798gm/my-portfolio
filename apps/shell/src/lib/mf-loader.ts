@@ -130,36 +130,32 @@ async function loadContainer(remoteUrl: string): Promise<MFContainer> {
 }
 
 /**
- * Resolves the Hitachi showcase remote URL.
+ * Resolves a showcase remote URL.
  *
  * Priority:
- * 1. NEXT_PUBLIC_HITACHI_REMOTE_URL — explicit override (any environment)
- * 2. VERCEL_URL — Vercel system env (only in production,
- *  undefined locally so localhost is used)
- * 3. http://localhost:5001 — local dev fallback
+ * 1. Explicit env var override (NEXT_PUBLIC_*_REMOTE_URL)
+ * 2. VERCEL_URL — Vercel system env (production/preview only)
+ * 3. localhost fallback
  */
-function resolveHitachiRemoteUrl(): string {
+function resolveRemoteUrl(envKey: string, localPort: number): string {
   if (typeof process === 'undefined' || typeof window === 'undefined') {
-    return 'http://localhost:5001'
+    return `http://localhost:${localPort}`
   }
 
-  // Explicit override takes precedence in all environments
-  // Strip trailing slash to prevent double-slash in URL construction
-  if (process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL) {
-    return process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL.replace(/\/+$/, '')
+  const envVal = process.env[envKey]
+  if (envVal) {
+    return envVal.replace(/\/+$/, '')
   }
 
-  // On Vercel (production or preview) VERCEL_URL is set automatically.
-  // process.env.NODE_ENV === 'production' check prevents this from activating
-  // locally where VERCEL_URL may be undefined.
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`
   }
 
-  return 'http://localhost:5001'
+  return `http://localhost:${localPort}`
 }
 
-const HITACHI_REMOTE_URL = resolveHitachiRemoteUrl()
+const HITACHI_REMOTE_URL = resolveRemoteUrl('NEXT_PUBLIC_HITACHI_REMOTE_URL', 5001)
+const AQUARIUX_REMOTE_URL = resolveRemoteUrl('NEXT_PUBLIC_AQUARIUX_REMOTE_URL', 5002)
 
 /**
  * Load an exposed module from the showcase_hitachi Vite MF remote.
@@ -168,6 +164,18 @@ const HITACHI_REMOTE_URL = resolveHitachiRemoteUrl()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function loadHitachiModule<T = any>(exposedPath: string): Promise<T> {
   const remoteUrl = `${HITACHI_REMOTE_URL}/remoteEntry.js`
+  const container = await loadContainer(remoteUrl)
+  const factory = await container.get(exposedPath)
+  return factory() as T
+}
+
+/**
+ * Load an exposed module from the showcase_aquariux Vite MF remote.
+ * @param exposedPath  e.g. './AquariuxApp'
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function loadAquariuxModule<T = any>(exposedPath: string): Promise<T> {
+  const remoteUrl = `${AQUARIUX_REMOTE_URL}/remoteEntry.js`
   const container = await loadContainer(remoteUrl)
   const factory = await container.get(exposedPath)
   return factory() as T

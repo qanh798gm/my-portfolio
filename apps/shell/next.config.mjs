@@ -22,7 +22,10 @@ const nextConfig = {
           filename: 'static/chunks/remoteEntry.js',
           remotes: {
             showcase_hitachi: `showcase_hitachi@${
-            (process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL ?? 'http://localhost:5001').replace(/\/+$/, '')
+              (process.env.NEXT_PUBLIC_HITACHI_REMOTE_URL ?? 'http://localhost:5001').replace(/\/+$/, '')
+            }/remoteEntry.js`,
+            showcase_aquariux: `showcase_aquariux@${
+              (process.env.NEXT_PUBLIC_AQUARIUX_REMOTE_URL ?? 'http://localhost:5002').replace(/\/+$/, '')
             }/remoteEntry.js`,
           },
           exposes: {},
@@ -53,7 +56,11 @@ const nextConfig = {
       ...(Array.isArray(existingExternals) ? existingExternals : [existingExternals]),
       ({ request }, callback) => {
         // Only intercept server-side resolution of MF remote namespaces
-        if (isServer && request && request.startsWith('showcase_hitachi/')) {
+        if (
+          isServer &&
+          request &&
+          (request.startsWith('showcase_hitachi/') || request.startsWith('showcase_aquariux/'))
+        ) {
           // Return a stub so server compilation doesn't fail
           return callback(null, `commonjs ${request}`)
         }
