@@ -5,6 +5,7 @@ import { TradingPage } from './pages/TradingPage'
 import { PortfolioPage } from './pages/PortfolioPage'
 import { MarketsPage } from './pages/MarketsPage'
 import { colors } from './utils/theme'
+import { useMarketData } from './hooks/useMarketData'
 
 /**
  * AquariuxApp — self-contained multi-asset trading platform demo.
@@ -15,6 +16,8 @@ import { colors } from './utils/theme'
  *    (the shell's browser router isn't hijacked)
  */
 export function AquariuxApp() {
+  const { connectionStatus } = useMarketData()
+
   return (
     <MemoryRouter initialEntries={['/']}>
       <div
@@ -42,7 +45,7 @@ export function AquariuxApp() {
           }}
         >
           {/* Top bar */}
-          <AquariuxTopBar />
+          <AquariuxTopBar connectionStatus={connectionStatus} />
 
           {/* Page content */}
           <main

@@ -123,15 +123,15 @@
 
 > **Branch:** `feat/phase-2-aquariux-showcase` | **Port:** 5002 | **Detail plan:** [`PHASE2_AQUARIUX_PLAN.md`](./PHASE2_AQUARIUX_PLAN.md)
 
-- [ ] Scaffold `apps/showcase-aquariux` (Vite + React + MF, port 5002)
-- [ ] Dark theme setup (aquariux-dark tokens, inline styles)
-- [ ] Data layer: Binance WebSocket (crypto) + Twelve Data REST (stocks/forex/ETFs)
-- [ ] Zustand store: selected symbol, price map, watchlist, favourites
+- [x] Scaffold `apps/showcase-aquariux` (Vite + React + MF, port 5002)
+- [x] Dark theme setup (aquariux-dark tokens, inline styles)
+- [x] Data layer: Binance WebSocket (crypto) + Twelve Data REST (stocks/forex/ETFs)
+- [x] Zustand store: selected symbol, price map, watchlist, favourites
 - [ ] Trading page: Watchlist | TradingView Lightweight Chart | Trade Form
 - [ ] Portfolio page: Asset distribution donut, PnL cards, positions/orders/history tables
 - [ ] Markets page: 6 category boxes with virtualized lists (@tanstack/react-virtual)
-- [ ] Wire into shell (mf-loader, next.config, showcase page)
-- [ ] Build verification + integration testing
+- [x] Wire into shell (mf-loader, next.config, showcase page)
+- [x] Build verification + integration testing
 
 ### Phase 3 — GMO Showcase ⏳ Not Started
 
